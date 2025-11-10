@@ -1,0 +1,80 @@
+<section class="container" @fadeIn>
+  <a routerLink="/patrimoines" class="back">← Retour à la liste</a>
+
+  @if (loading) {
+  <div class="loading">Chargement…</div>
+  } @else if (error) {
+  <div class="error">{{ error }}</div>
+  } @else if (patrimoine) {
+  <header class="hero">
+    <div class="media">
+      <img [src]="patrimoine.photoCarousel[0]" [alt]="patrimoine.nom" />
+    </div>
+    <div class="meta">
+      <h2>{{ patrimoine.nom }}</h2>
+      <p class="muted">{{ patrimoine.localisation }}</p>
+      <div class="chips">
+        @for (cat of patrimoine.categories; track cat) { <span class="chip">{{ cat }}</span> }
+      </div>
+    </div>
+  </header>
+
+  <div class="details">
+    <div class="panel">
+      <h3>À propos</h3>
+      <p>{{ patrimoine.description }}</p>
+      @if (patrimoine.origineHistorique) {
+      <p class="muted">Origine: {{ patrimoine.origineHistorique }}</p>
+      }
+      <ul class="grid-info">
+        <li><strong>Ouvert:</strong> {{ patrimoine.ouvert ? 'Oui' : 'Non' }}</li>
+        <li><strong>Prix d'entrée:</strong> {{ patrimoine.prixEntree | number : '1.0-2' }} DT</li>
+        <li><strong>Classé:</strong> {{ patrimoine.estClasse ? 'Oui' : 'Non' }}</li>
+        <li>
+          <strong>Visites guidées:</strong>
+          {{ patrimoine.visitesGuideesDisponibles ? 'Oui' : 'Non' }}
+        </li>
+        <li><strong>Date de construction:</strong> {{ patrimoine.dateConstruction || '—' }}</li>
+      </ul>
+    </div>
+
+    <div class="panel">
+      <h3>Horaires</h3>
+      <ul>
+        @for (h of patrimoine.horaires; track h) {
+        <li>{{ h }}</li>
+        }
+      </ul>
+    </div>
+
+    <div class="panel">
+      <h3>Lieux proches</h3>
+      <ul>
+        @for (l of patrimoine.lieuxProches; track l.nom) {
+        <li>
+          {{ l.nom }} — <span class="muted">{{ l.type }}</span>
+          <span class="muted" *ngIf="l.distanceKm">• {{ l.distanceKm }} km</span>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+
+  <section class="monuments">
+    <h3>Monuments</h3>
+    <div class="grid">
+      @for (m of patrimoine.monuments; track m.id) {
+      <a class="monument-card" [routerLink]="['/patrimoines', patrimoine!.id, 'monuments', m.id]">
+        <img [src]="m.photoCarousel[0]" [alt]="m.nom" />
+        <div class="content">
+          <h4>{{ m.nom }}</h4>
+          <p class="muted">{{ m.categories.join(', ') }}</p>
+        </div>
+      </a>
+      }
+    </div>
+  </section>
+
+  <router-outlet />
+  }
+</section>

@@ -1,0 +1,26 @@
+<div class="monument-detail" *ngIf="!loading && !error && monument">
+  <h3>{{ monument!.nom }}</h3>
+  <div class="gallery">
+    @for (img of monument!.photoCarousel; track img) { <img [src]="img" [alt]="monument!.nom" /> }
+  </div>
+  <p>{{ monument!.description }}</p>
+  <ul class="info">
+    <li><strong>Prix:</strong> {{ monument!.prixEntree }} DT</li>
+    <li><strong>Ouvert:</strong> {{ monument!.ouvert ? 'Oui' : 'Non' }}</li>
+    <li><strong>Catégories:</strong> {{ monument!.categories.join(', ') }}</li>
+  </ul>
+  <h4>Commentaires</h4>
+  <ul class="comments">
+    @for (c of monument!.comments; track c.id) {
+    <li>
+      <strong>{{ c.nom }}</strong> <span class="date">{{ c.date }}</span>
+      <p>{{ c.message }}</p>
+    </li>
+    }
+  </ul>
+</div>
+@if (loading) {
+<div class="loading">Chargement du monument…</div>
+} @if (error) {
+<div class="error">{{ error }}</div>
+}

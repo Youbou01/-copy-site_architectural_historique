@@ -1,0 +1,27 @@
+body,
+:host {
+  font-family: system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: #030712;
+  color: #e5e7eb;
+}
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 24px;
+  background: #0f172a;
+  border-bottom: 1px solid #1e293b;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.main-nav .brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: #fff;
+}
+.main-nav a {
+  color: #93c5fd;
+  text-decoration: none;
+}

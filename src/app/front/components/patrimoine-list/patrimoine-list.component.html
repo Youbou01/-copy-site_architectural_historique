@@ -1,0 +1,22 @@
+<section class="container">
+  <header class="page-header">
+    <h2>Patrimoines de Tunisie</h2>
+    <p class="muted">Découvrez une sélection de sites historiques et culturels</p>
+  </header>
+
+  @if (loading()) {
+  <div class="skeleton-grid">
+    @for (i of [0,1,2,3,4,5]; track i) {
+    <div class="skeleton-card"></div>
+    }
+  </div>
+  } @else if (error()) {
+  <div class="error">{{ error() }}</div>
+  } @else {
+  <div class="grid">
+    @for (p of patrimoines(); track p.id) {
+    <app-patrimoine-card [patrimoine]="p" />
+    }
+  </div>
+  }
+</section>

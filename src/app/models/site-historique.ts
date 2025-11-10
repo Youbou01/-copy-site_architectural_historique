@@ -6,13 +6,14 @@ export interface SiteHistorique {
   id: string;
   nom: string;
   localisation?: string;
-  adresse?:string;
+  adresse?: string;
   description: string;
+  origineHistorique?: string; // ajout pour refléter db.json
   photoCarousel: string[]; //make link in images(clicked) that correspond to monuments
   latitude: number;
   longitude: number;
   categories: string[];
-  dateConstruction: string|null;
+  dateConstruction: string | null;
   estClasse: boolean;
   prixEntree: number;
   ouvert: boolean;
@@ -21,5 +22,5 @@ export interface SiteHistorique {
   lieuxProches: LieuProche[];
   comments: Commentaire[];
   monuments: SiteHistorique[];
-  stats?:Stats;
+  stats?: Stats;
 }
