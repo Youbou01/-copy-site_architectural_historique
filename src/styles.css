@@ -1,4 +1,82 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: #060b12;
+  color: #e2e8f0;
+}
+
+/* Design tokens */
+:root {
+  --surface-0: #0b121b;
+  --surface-1: #101a25;
+  --surface-2: #162231;
+  --accent: #0ea5e9;
+  --accent-secondary: #10b981;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 8px 28px -6px rgba(0, 0, 0, 0.55);
+}
+
+.card-surface {
+  background: var(--surface-1);
+  border: 1px solid var(--surface-2);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+.chip-soft {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+}
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Utility */
+.grid-auto-fill {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.1rem;
+}
+.fade-in {
+  animation: fadeIn 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+footer.site-footer {
+  margin-top: 4rem;
+  padding: 2.5rem 0 3rem;
+  background: var(--surface-2);
+  color: #94a3b8;
+}
+footer.site-footer a {
+  color: #e2e8f0;
+  text-decoration: none;
+}
+footer.site-footer a:hover {
+  color: var(--accent);
+}

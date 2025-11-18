@@ -2,9 +2,9 @@
   "patrimoines": [
     {
       "id": "place-001",
-      "nom": "Amphithéâtre d'El Jem",
+      "nom": "El Jem",
       "localisation": "El Jem, Mahdia Governorate",
-      "description": "Monument romain célèbre pour son amphithéâtre bien conservé, classé au patrimoine mondial de l'UNESCO.",
+      "description": "Située à une soixantaine de kilomètres de Sousse, El Jem illustre le lien entre la Tunisie et l’Empire romain. Un colisée imposant, des villas d’aristocrates, une tradition ancestrale de la mosaïque… Découvrez l’héritage de cette perle du Sahel",
       "origineHistorique": "Antiquité romaine",
       "photoCarousel": ["images/eljem_1.jpg", "images/eljem_2.jpg", "images/eljem_3.jpg"],
       "latitude": 35.3006,
@@ -25,8 +25,8 @@
       "monuments": [
         {
           "id": "mon-001-01",
-          "nom": "Amphithéâtre d'El Jem (structure principale)",
-          "description": "Amphithéâtre romain du IIIe siècle, capable d'accueillir des milliers de spectateurs.",
+          "nom": "Amphithéâtre d'El Jem",
+          "description": "Amphithéâtre romain du IIIe siècle, capable d'accueillir des milliers de spectateurs, classé aussi au patrimoine mondial de l'UNESCO.",
           "origineHistorique": "Antiquité romaine",
           "photoCarousel": ["images/eljem_amphi_1.jpg", "images/eljem_amphi_2.jpg"],
           "latitude": 35.30062,

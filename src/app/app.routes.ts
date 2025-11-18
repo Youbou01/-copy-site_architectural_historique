@@ -6,10 +6,7 @@ import { MonumentDetailComponent } from './front/components/monument-detail/monu
 export const routes: Routes = [
   { path: '', redirectTo: 'patrimoines', pathMatch: 'full' },
   { path: 'patrimoines', component: PatrimoineListComponent },
-  {
-    path: 'patrimoines/:patrimoineId',
-    component: PatrimoineDetailComponent,
-    children: [{ path: 'monuments/:monumentId', component: MonumentDetailComponent }],
-  },
+  { path: 'patrimoines/:patrimoineId', component: PatrimoineDetailComponent },
+  { path: 'patrimoines/:patrimoineId/monuments/:monumentId', component: MonumentDetailComponent },
   { path: '**', redirectTo: 'patrimoines' },
 ];

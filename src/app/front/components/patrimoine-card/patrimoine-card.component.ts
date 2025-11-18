@@ -12,8 +12,8 @@ import { trigger, transition, style, animate } from '@angular/animations';
   animations: [
     trigger('cardEnter', [
       transition(':enter', [
-        style({ opacity: 0, transform: 'scale(.95)' }),
-        animate('350ms cubic-bezier(.4,0,.2,1)', style({ opacity: 1, transform: 'scale(1)' })),
+        style({ opacity: 0, transform: 'translateY(6px)' }),
+        animate('300ms cubic-bezier(.4,0,.2,1)', style({ opacity: 1, transform: 'none' })),
       ]),
     ]),
   ],
@@ -34,7 +34,9 @@ import { trigger, transition, style, animate } from '@angular/animations';
       </div>
       <div class="content">
         <h3>{{ patrimoine.nom }}</h3>
-        <p class="location" *ngIf="patrimoine.localisation">{{ patrimoine.localisation }}</p>
+        @if (patrimoine.localisation) {
+        <p class="location">{{ patrimoine.localisation }}</p>
+        }
       </div>
     </article>
   `,

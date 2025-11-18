@@ -1,22 +1,79 @@
 <section class="container">
   <header class="page-header">
-    <h2>Patrimoines de Tunisie</h2>
-    <p class="muted">Découvrez une sélection de sites historiques et culturels</p>
+    <h2 class="mb-1">Patrimoines de Tunisie</h2>
+    <p class="muted mb-3">Découvrez une sélection de sites historiques et culturels</p>
   </header>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar card-surface p-3 mb-4 fade-in">
+    <div class="row g-2 align-items-center">
+      <div class="col-12 col-md-4">
+        <input
+          #searchBox
+          type="text"
+          class="form-control"
+          placeholder="Recherche (nom ou localisation)"
+          [value]="search()"
+          (input)="setSearch(searchBox.value)"
+        />
+      </div>
+      <div class="col-6 col-md-3">
+        <select
+          #categorySel
+          class="form-select"
+          [value]="category()"
+          (change)="setCategory(categorySel.value)"
+        >
+          <option value="">Toutes catégories</option>
+          @for (c of categories(); track c) {
+          <option [value]="c">{{ c }}</option>
+          }
+        </select>
+      </div>
+      <div class="col-6 col-md-3 d-flex gap-2 sort-buttons">
+        <button
+          class="btn btn-sm btn-outline-light"
+          [class.active]="sortMode() === 'alpha'"
+          (click)="setSort('alpha')"
+        >
+          A→Z
+        </button>
+        <button
+          class="btn btn-sm btn-outline-light"
+          [class.active]="sortMode() === 'reverse'"
+          (click)="setSort('reverse')"
+        >
+          Z→A
+        </button>
+        <button
+          class="btn btn-sm btn-outline-secondary"
+          [class.active]="sortMode() === 'none'"
+          (click)="setSort('none')"
+        >
+          Reset
+        </button>
+      </div>
+      <div class="col-12 col-md-2 text-md-end mt-2 mt-md-0">
+        <span class="badge bg-info-subtle text-info-emphasis"
+          >{{ filteredPatrimoines().length }} résultat(s)</span
+        >
+      </div>
+    </div>
+  </div>
 
   @if (loading()) {
   <div class="skeleton-grid">
-    @for (i of [0,1,2,3,4,5]; track i) {
+    @for (i of [0,1,2,3,4,5,6,7]; track i) {
     <div class="skeleton-card"></div>
     }
   </div>
   } @else if (error()) {
   <div class="error">{{ error() }}</div>
+  } @else { @if (filteredPatrimoines().length === 0) {
+  <div class="alert alert-secondary">Aucun patrimoine ne correspond aux filtres.</div>
   } @else {
-  <div class="grid">
-    @for (p of patrimoines(); track p.id) {
-    <app-patrimoine-card [patrimoine]="p" />
-    }
+  <div class="grid" [@listStagger]>
+    @for (p of filteredPatrimoines(); track p.id) { <app-patrimoine-card [patrimoine]="p" /> }
   </div>
-  }
+  } }
 </section>

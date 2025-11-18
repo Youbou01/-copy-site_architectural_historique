@@ -1,0 +1,23 @@
+.navbar {
+  background: linear-gradient(135deg, #0b1729, #0d2238);
+  border: 1px solid #1e293b;
+}
+.navbar-brand {
+  color: #e2e8f0;
+}
+.navbar-brand:hover {
+  color: #0ea5e9;
+}
+.nav-link {
+  color: #cbd5e1;
+}
+.nav-link:hover {
+  color: #0ea5e9;
+}
+.nav-link.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.navbar-toggler {
+  border-color: #334155;
+}

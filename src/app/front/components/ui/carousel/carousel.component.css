@@ -1,0 +1,52 @@
+.embla {
+  position: relative;
+  height: var(--carousel-height, 320px);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0b1220;
+  border: 1px solid #14213a;
+}
+.embla__viewport {
+  height: 100%;
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+  height: 100%;
+}
+.embla__slide {
+  position: relative;
+  flex: 0 0 100%;
+  height: 100%;
+}
+.embla__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.embla__btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid #334155;
+  color: #e2e8f0;
+  background: rgba(0, 0, 0, 0.35);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.embla__btn:hover {
+  background: rgba(14, 165, 233, 0.25);
+  border-color: #0ea5e9;
+}
+.embla__btn--prev {
+  left: 10px;
+}
+.embla__btn--next {
+  right: 10px;
+}

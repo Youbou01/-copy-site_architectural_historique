@@ -1,0 +1,17 @@
+<div class="embla" [style.--carousel-height]="height" [style.height]="height">
+  <div #viewport class="embla__viewport">
+    <div class="embla__container">
+      @for (img of images; track img) {
+      <div class="embla__slide">
+        <img [src]="img" alt="" />
+      </div>
+      }
+    </div>
+  </div>
+  <button class="embla__btn embla__btn--prev" type="button" (click)="prev()" aria-label="Précédent">
+    ‹
+  </button>
+  <button class="embla__btn embla__btn--next" type="button" (click)="next()" aria-label="Suivant">
+    ›
+  </button>
+</div>

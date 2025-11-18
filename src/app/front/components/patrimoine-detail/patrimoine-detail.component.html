@@ -1,15 +1,25 @@
-//used ngIf
-<section class="container" @fadeIn>
+<section class="container" [@pageFade]>
   <a routerLink="/patrimoines" class="back">← Retour à la liste</a>
 
   @if (loading) {
-  <div class="loading">Chargement…</div>
-  } @else if (error) {
+  <div class="detail-skeleton">
+    <div class="hero-skel shimmer"></div>
+    <div class="panels-skel">
+      <div class="panel-skel shimmer"></div>
+      <div class="panel-skel shimmer"></div>
+      <div class="panel-skel shimmer"></div>
+    </div>
+  </div>
+  } @else { @if (error) {
   <div class="error">{{ error }}</div>
   } @else if (patrimoine) {
   <header class="hero">
     <div class="media">
-      <img [src]="patrimoine.photoCarousel[0]" [alt]="patrimoine.nom" />
+      @if (patrimoine.photoCarousel.length) {
+      <app-carousel [images]="patrimoine.photoCarousel" height="360px" />
+      } @else {
+      <img [src]="'/images/placeholder.webp'" [alt]="patrimoine.nom" />
+      }
     </div>
     <div class="meta">
       <h2>{{ patrimoine.nom }}</h2>
@@ -53,8 +63,8 @@
       <ul>
         @for (l of patrimoine.lieuxProches; track l.nom) {
         <li>
-          {{ l.nom }} — <span class="muted">{{ l.type }}</span>
-          <span class="muted" *ngIf="l.distanceKm">• {{ l.distanceKm }} km</span>
+          {{ l.nom }} — <span class="muted">{{ l.type }}</span> @if (l.distanceKm) {
+          <span class="muted">• {{ l.distanceKm }} km</span> }
         </li>
         }
       </ul>
@@ -76,6 +86,5 @@
     </div>
   </section>
 
-  <router-outlet />
-  }
+  } }
 </section>

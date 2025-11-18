@@ -1,20 +1,21 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PatrimoineService } from '../../../services/patrimoine.service';
 import { SiteHistorique } from '../../../models/site-historique';
 import { switchMap } from 'rxjs/operators';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { CarouselComponent } from '../ui/carousel/carousel.component';
 
 @Component({
   selector: 'app-patrimoine-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet],
+  imports: [CommonModule, RouterLink, CarouselComponent],
   animations: [
-    trigger('fadeIn', [
+    trigger('pageFade', [
       transition(':enter', [
-        style({ opacity: 0, filter: 'blur(4px)' }),
-        animate('400ms ease-out', style({ opacity: 1, filter: 'blur(0)' })),
+        style({ opacity: 0 }),
+        animate('250ms ease-out', style({ opacity: 1 })),
       ]),
     ]),
   ],

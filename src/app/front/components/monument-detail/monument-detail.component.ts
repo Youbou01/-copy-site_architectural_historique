@@ -6,11 +6,21 @@ import { SiteHistorique } from '../../../models/site-historique';
 import { combineLatest, of } from 'rxjs';
 import { map, switchMap, tap, catchError } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { CarouselComponent } from '../ui/carousel/carousel.component';
 
 @Component({
   selector: 'app-monument-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CarouselComponent],
+  animations: [
+    trigger('pageFade', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('250ms ease-out', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
   templateUrl: './monument-detail.component.html',
   styleUrls: ['./monument-detail.component.css'],
 })
@@ -39,9 +49,7 @@ export class MonumentDetailComponent {
             this.route.snapshot.paramMap.get('patrimoineId') ??
             this.route.snapshot.paramMap.get('id');
 
-          const monumentId =
-            cp.get('monumentId') ??
-            cp.get('id');
+          const monumentId = cp.get('monumentId') ?? cp.get('id');
 
           return { patrimoineId, monumentId };
         }),
@@ -59,9 +67,9 @@ export class MonumentDetailComponent {
           }
 
           // Fallback: fetch patrimoine, then find monument
-          return this.service.getById(patrimoineId).pipe(
-            map((p) => p.monuments.find((m) => m.id === monumentId) ?? null)
-          );
+          return this.service
+            .getById(patrimoineId)
+            .pipe(map((p) => p.monuments.find((m) => m.id === monumentId) ?? null));
         }),
         catchError((err) => {
           console.error(err);

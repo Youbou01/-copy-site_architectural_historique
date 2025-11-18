@@ -1,32 +1,23 @@
-<section class="monument-detail">
+<section class="monument-detail" [@pageFade]>
   @if (loading()) {
-    <div class="loading">
-      <span>Chargement…</span>
-    </div>
-  } @else {
-    @if (error()) {
-      <div class="error">
-        {{ error() }}
-      </div>
-    } @else {
-      @if (monument()) {
-        <article class="content">
-          <h2>{{ monument()!.nom }}</h2>
+  <div class="loading">
+    <span>Chargement…</span>
+  </div>
+  } @else { @if (error()) {
+  <div class="error">
+    {{ error() }}
+  </div>
+  } @else { @if (monument()) {
+  <article class="content">
+    <h2>{{ monument()!.nom }}</h2>
 
-          @if (monument()!.photoCarousel?.length) {
-            <img
-              [src]="monument()!.photoCarousel[0]"
-              [alt]="monument()!.nom"
-            />
-          }
-
-          @if (monument()!.description) {
-            <p>{{ monument()!.description }}</p>
-          }
-        </article>
-      } @else {
-        <div class="empty">Aucun détail disponible.</div>
-      }
+    @if (monument()!.photoCarousel && monument()!.photoCarousel.length) {
+    <app-carousel [images]="monument()!.photoCarousel" height="340px" />
+    } @if (monument()!.description) {
+    <p>{{ monument()!.description }}</p>
     }
-  }
+  </article>
+  } @else {
+  <div class="empty">Aucun détail disponible.</div>
+  } } }
 </section>
