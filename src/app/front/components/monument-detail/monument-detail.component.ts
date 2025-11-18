@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PatrimoineService } from '../../../services/patrimoine.service';
 import { SiteHistorique } from '../../../models/site-historique';
 import { combineLatest, of } from 'rxjs';
@@ -12,7 +12,7 @@ import { CarouselComponent } from '../ui/carousel/carousel.component';
 @Component({
   selector: 'app-monument-detail',
   standalone: true,
-  imports: [CommonModule, CarouselComponent],
+  imports: [CommonModule, RouterLink, CarouselComponent],
   animations: [
     trigger('pageFade', [
       transition(':enter', [
@@ -31,6 +31,7 @@ export class MonumentDetailComponent {
   loading = signal(true);
   error = signal<string | null>(null);
   monument = signal<SiteHistorique | null>(null);
+  parentId = signal<string | null>(null);
 
   constructor() {
     const parent = this.route.parent ?? this.route;
@@ -53,6 +54,7 @@ export class MonumentDetailComponent {
 
           return { patrimoineId, monumentId };
         }),
+        tap(({ patrimoineId }) => this.parentId.set(patrimoineId ?? null)),
         switchMap(({ patrimoineId, monumentId }) => {
           if (!patrimoineId || !monumentId) {
             this.error.set('Paramètres de route invalides.');

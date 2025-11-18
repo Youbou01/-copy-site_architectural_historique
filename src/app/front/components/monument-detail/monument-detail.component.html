@@ -1,5 +1,7 @@
 <section class="monument-detail" [@pageFade]>
-  @if (loading()) {
+  @if (parentId()) {
+  <a class="back" [routerLink]="['/patrimoines', parentId()!]">← Retour à la place</a>
+  } @if (loading()) {
   <div class="loading">
     <span>Chargement…</span>
   </div>

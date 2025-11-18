@@ -6,6 +6,12 @@
   padding: 14px;
   margin-top: 16px;
 }
+.back {
+  color: #2563eb;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 12px;
+}
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
