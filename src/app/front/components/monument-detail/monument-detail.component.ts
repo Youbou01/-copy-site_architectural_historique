@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PatrimoineService } from '../../../services/patrimoine.service';
@@ -28,11 +28,22 @@ import { SafeUrlPipe } from '../../../pipes/safe-url.pipe';
 export class MonumentDetailComponent {
   private route = inject(ActivatedRoute);
   private service = inject(PatrimoineService);
-
+  
   loading = signal(true);
   error = signal<string | null>(null);
   monument = signal<SiteHistorique | null>(null);
   parentId = signal<string | null>(null);
+
+  // UI helpers
+  readonly stars = [1, 2, 3, 4, 5] as const;
+
+  avgNote = computed<number | null>(() => {
+    const comments = this.monument()?.comments ?? [];
+    const rated = comments.filter((c) => c.note != null);
+    if (!rated.length) return null;
+    const sum = rated.reduce((s, c) => s + (c.note ?? 0), 0);
+    return Math.round((sum / rated.length) * 10) / 10;
+  });
 
   constructor() {
     const parent = this.route.parent ?? this.route;
@@ -89,5 +100,10 @@ export class MonumentDetailComponent {
         takeUntilDestroyed()
       )
       .subscribe();
+  }
+
+  initiales(nom: string): string {
+    const parts = nom.trim().split(/\s+/);
+    return (parts[0]?.[0] ?? '').toUpperCase() + (parts[1]?.[0] ?? '').toUpperCase();
   }
 }

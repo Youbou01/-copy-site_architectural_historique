@@ -1,17 +1,42 @@
-<div class="embla" [style.--carousel-height]="height" [style.height]="height">
+<div class="embla"
+     [style.--carousel-height]="height"
+     [style.height]="height"
+     (keydown)="keyHandler($event)"
+     tabindex="0"
+     aria-roledescription="carousel">
   <div #viewport class="embla__viewport">
     <div class="embla__container">
-      @for (img of images; track img) {
-      <div class="embla__slide">
+      @for (img of images; let i = $index; track img) {
+      <div class="embla__slide" [class.active]="activeIndex() === i">
         <img [src]="img" alt="" />
+        <div class="slide-overlay"></div>
       </div>
       }
     </div>
   </div>
-  <button class="embla__btn embla__btn--prev" type="button" (click)="prev()" aria-label="Précédent">
-    ‹
+
+  <div class="progress" role="progressbar" [attr.aria-valuenow]="progress()" aria-valuemin="0" aria-valuemax="100">
+    <div class="bar" [style.width.%]="progress()"></div>
+  </div>
+
+  <button class="embla__btn embla__btn--prev" type="button" (click)="prev()" [disabled]="!canPrev()" aria-label="Précédent">
+    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M10.5 19.5 3 12l7.5-7.5 1.06 1.06L6.12 11h14.38v2H6.12l5.44 5.44-1.06 1.06Z"/></svg>
   </button>
-  <button class="embla__btn embla__btn--next" type="button" (click)="next()" aria-label="Suivant">
-    ›
+  <button class="embla__btn embla__btn--next" type="button" (click)="next()" [disabled]="!canNext()" aria-label="Suivant">
+    <svg viewBox="0 0 24 24"><path fill="currentColor" d="m13.5 4.5 7.5 7.5-7.5 7.5-1.06-1.06L17.88 13H3.5v-2h14.38L12.44 5.56 13.5 4.5Z"/></svg>
   </button>
+
+  @if (showThumbnails && images.length > 1) {
+  <div class="thumbs">
+    @for (img of images; let i = $index; track img) {
+    <button type="button"
+            class="thumb"
+            [class.active]="activeIndex() === i"
+            (click)="goTo(i)"
+            [attr.aria-label]="'Aller à la diapositive ' + (i + 1)">
+      <img [src]="img" alt="" />
+    </button>
+    }
+  </div>
+  }
 </div>

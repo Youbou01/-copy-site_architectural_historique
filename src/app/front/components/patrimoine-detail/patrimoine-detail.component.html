@@ -1,143 +1,424 @@
-<section class="container" [@pageFade]>
-  <a routerLink="/patrimoines" class="back">← Retour à la liste</a>
+<section class="patrimoine-shell" [@pageFade]>
+  <div class="top-bar">
+    <a routerLink="/patrimoines" class="back-link">
+      <svg viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M10.5 19.5 3 12l7.5-7.5 1.06 1.06L6.12 11h14.38v2H6.12l5.44 5.44-1.06 1.06Z"
+        />
+      </svg>
+      Retour à la liste
+    </a>
 
-  @if (loading) {
-  <div class="detail-skeleton">
-    <div class="hero-skel shimmer"></div>
-    <div class="panels-skel">
-      <div class="panel-skel shimmer"></div>
-      <div class="panel-skel shimmer"></div>
-      <div class="panel-skel shimmer"></div>
+    @if (averageRating() !== null) {
+    <div class="agg-rating">
+      <div class="stars">
+        @for (s of stars; track s) {
+        <svg viewBox="0 0 24 24" [class.filled]="s <= roundedAverage()">
+          <path
+            fill="currentColor"
+            d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21Z"
+          />
+        </svg>
+        }
+      </div>
+      <span class="value">{{ averageRating() }}</span>
+      <span class="count">({{ allComments().length }} avis)</span>
     </div>
+    }
   </div>
-  } @else { @if (error) {
-  <div class="error">{{ error }}</div>
-  } @else if (patrimoine) {
+
+  @if (loading()) {
+  <div class="hero-skeleton shimmer"></div>
+  } @else if (error()) {
+  <div class="error-block">{{ error() }}</div>
+  } @else if (patrimoine()) {
+
   <header class="hero">
     <div class="media">
-      @if (patrimoine.photoCarousel.length) {
-      <app-carousel [images]="patrimoine.photoCarousel" height="360px" />
+      @if (patrimoine()!.photoCarousel?.length) {
+      <app-carousel
+        [images]="patrimoine()!.photoCarousel"
+        height="420px"
+        [loop]="true"
+        [options]="{ dragFree: true }"
+      />
       } @else {
-      <img [src]="'/images/placeholder.webp'" [alt]="patrimoine.nom" />
+      <div class="placeholder">
+        <svg viewBox="0 0 24 24">
+          <path fill="currentColor" d="M3 5h18v14H3V5Zm2 2v10h14V7H5Zm3 2 4 4 4-4 3 6H6l2-6Z" />
+        </svg>
+        <span>Image indisponible</span>
+      </div>
       }
     </div>
+
     <div class="meta">
-      <h2>{{ patrimoine.nom }}</h2>
-      <p class="muted">{{ patrimoine.localisation }}</p>
+      <h1 class="title">{{ patrimoine()!.nom }}</h1>
+      @if (patrimoine()!.localisation) {
+      <p class="location">
+        <svg viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5Z"
+          />
+        </svg>
+        {{ patrimoine()!.localisation }}
+      </p>
+      }
       <div class="chips">
-        @for (cat of patrimoine.categories; track cat) { <span class="chip">{{ cat }}</span> }
+        @for (cat of patrimoine()!.categories; track cat) {
+        <span class="chip">
+          <svg viewBox="0 0 24 24">
+            <path
+              fill="currentColor"
+              d="M20.59 13.41 12 4.83H4v8.17l8.59 8.59a2 2 0 0 0 2.82 0l5.18-5.18a2 2 0 0 0 0-2.82ZM7 9a2 2 0 1 1 2-2 2 2 0 0 1-2 2Z"
+            />
+          </svg>
+          {{ cat }}
+        </span>
+        }
       </div>
     </div>
   </header>
 
-  <div class="details">
-    <div class="panel">
-      <h3>À propos</h3>
-      <p>{{ patrimoine.description }}</p>
-      @if (patrimoine.origineHistorique) {
-      <p class="muted">Origine: {{ patrimoine.origineHistorique }}</p>
-      }
-      <ul class="grid-info">
-        <li><strong>Ouvert:</strong> {{ patrimoine.ouvert ? 'Oui' : 'Non' }}</li>
-        <li><strong>Prix d'entrée:</strong> {{ patrimoine.prixEntree | number : '1.0-2' }} DT</li>
-        <li><strong>Classé:</strong> {{ patrimoine.estClasse ? 'Oui' : 'Non' }}</li>
-        <li>
-          <strong>Visites guidées:</strong>
-          {{ patrimoine.visitesGuideesDisponibles ? 'Oui' : 'Non' }}
-        </li>
-        <li><strong>Date de construction:</strong> {{ patrimoine.dateConstruction || '—' }}</li>
-      </ul>
+  <nav class="tabs">
+    <button
+      type="button"
+      class="tab-btn"
+      [class.active]="activeTab() === 'about'"
+      (click)="setTab('about')"
+    >
+      À propos
+    </button>
+    <button
+      type="button"
+      class="tab-btn"
+      [class.active]="activeTab() === 'monuments'"
+      (click)="setTab('monuments')"
+    >
+      Monuments ({{ patrimoine()!.monuments.length }})
+    </button>
+    <button
+      type="button"
+      class="tab-btn"
+      [class.active]="activeTab() === 'comments'"
+      (click)="setTab('comments')"
+    >
+      Commentaires ({{ allComments().length }})
+    </button>
+    <button
+      type="button"
+      class="tab-btn"
+      [class.active]="activeTab() === 'map'"
+      (click)="setTab('map')"
+    >
+      Carte
+    </button>
+    <span
+      class="indicator"
+      [style.--tab-index]="['about', 'monuments', 'comments', 'map'].indexOf(activeTab())"
+    ></span>
+  </nav>
+
+  <!-- ABOUT -->
+  @if (activeTab() === 'about') {
+  <section class="panel about" [@sectionFade]>
+    <h2>Présentation</h2>
+    <p class="body-text">{{ patrimoine()!.description }}</p>
+
+    @if (patrimoine()!.origineHistorique) {
+    <div class="timeline">
+      <h3>
+        <svg viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12 8a4 4 0 1 1-4 4H2v-2h6a4 4 0 0 1 4-4Zm0 10a4 4 0 0 1-4-4H2v2h6a4 4 0 1 0 4-4v6Z"
+          />
+        </svg>
+        Origine historique
+      </h3>
+      <p>{{ patrimoine()!.origineHistorique }}</p>
+    </div>
+    }
+
+    <div class="info-grid">
+      <div class="info-card">
+        <svg viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M17 8h-1V6a4 4 0 1 0-8 0h2a2 2 0 1 1 4 0v2H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2Z"
+          />
+        </svg>
+        <strong>Ouvert</strong>
+        <span>{{ patrimoine()!.ouvert ? 'Oui' : 'Non' }}</span>
+      </div>
+      <div class="info-card">
+        <svg viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M3 6h18v12H3V6Zm2 2v8h14V8H5Zm4 6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+          />
+        </svg>
+        <strong>Prix d’entrée</strong>
+        <span>{{ patrimoine()!.prixEntree | number : '1.0-2' }} DT</span>
+      </div>
+      <div class="info-card">
+        <svg viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="m12 2 2.39 4.85L20 7.27l-3.64 3.55.86 5.02L12 13.77 6.78 15.84l.86-5.02L4 7.27l5.61-.42L12 2Z"
+          />
+        </svg>
+        <strong>Classé</strong>
+        <span>{{ patrimoine()!.estClasse ? 'Oui' : 'Non' }}</span>
+      </div>
+      <div class="info-card">
+        <svg viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm-8 0a3 3 0 1 0-3-3 3 3 0 0 0 3 3Zm0 2c-3.31 0-6 1.79-6 4v2h8v-2c0-1.08.39-2.07 1.06-2.9A7 7 0 0 0 8 13Zm8 0c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4Z"
+          />
+        </svg>
+        <strong>Visites guidées</strong>
+        <span>{{ patrimoine()!.visitesGuideesDisponibles ? 'Oui' : 'Non' }}</span>
+      </div>
+      <div class="info-card">
+        <svg viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v3H2V6a2 2 0 0 1 2-2h3V2Zm15 8v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10h20Z"
+          />
+        </svg>
+        <strong>Construction</strong>
+        <span>{{ patrimoine()!.dateConstruction || '—' }}</span>
+      </div>
+      <div class="info-card long">
+        <svg viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M20.59 13.41 12 4.83H4v8.17l8.59 8.59a2 2 0 0 0 2.82 0l5.18-5.18a2 2 0 0 0 0-2.82Z"
+          />
+        </svg>
+        <strong>Catégories</strong>
+        <span class="multi">
+          @for (cat of patrimoine()!.categories; track cat) {
+          <span class="mini-chip">{{ cat }}</span>
+          }
+        </span>
+      </div>
     </div>
 
-    <div class="panel">
-      <h3>Horaires</h3>
-      <ul>
-        @for (h of patrimoine.horaires; track h) {
+    @if (patrimoine()!.horaires?.length) {
+    <div class="sub-panel">
+      <h3>
+        <svg viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12 22a10 10 0 1 1 10-10 10.01 10.01 0 0 1-10 10Zm1-10V7h-2v7h6v-2h-4Z"
+          />
+        </svg>
+        Horaires
+      </h3>
+      <ul class="horaires">
+        @for (h of patrimoine()!.horaires; track h) {
         <li>{{ h }}</li>
         }
       </ul>
     </div>
-
-    <div class="panel">
-      <h3>Lieux proches</h3>
-      <ul>
-        @for (l of patrimoine.lieuxProches; track l.nom) {
+    } @if (patrimoine()!.lieuxProches?.length) {
+    <div class="sub-panel">
+      <h3>
+        <svg viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Z"
+          />
+        </svg>
+        Lieux proches
+      </h3>
+      <ul class="nearby">
+        @for (l of patrimoine()!.lieuxProches; track l.nom) {
         <li>
-          {{ l.nom }} — <span class="muted">{{ l.type }}</span> @if (l.distanceKm) {
-          <span class="muted">• {{ l.distanceKm }} km</span> }
-        </li>
-        }
-      </ul>
-    </div>
-
-    <div class="panel">
-      <h3>Statistiques</h3>
-      <ul class="stats-grid">
-        <li><strong>Vues:</strong> {{ patrimoine.stats?.vues ?? 0 }}</li>
-        <li><strong>Favoris:</strong> {{ patrimoine.stats?.favoris ?? 0 }}</li>
-        <li><strong>Note moyenne:</strong> {{ patrimoine.stats?.noteMoyenne ?? 0 }} / 5</li>
-      </ul>
-    </div>
-
-    <div class="panel">
-      <h3>Commentaires</h3>
-      @if (patrimoine.comments.length) {
-      <ul class="comments">
-        @for (c of patrimoine.comments; track c.id) {
-        <li>
-          <div class="d-flex justify-content-between">
-            <strong>{{ c.nom }}</strong>
-            <span class="date">{{ c.date }}</span>
-          </div>
-          @if (c.note) {
-          <div class="note">Note: {{ c.note }} / 5</div>
+          <strong>{{ l.nom }}</strong>
+          <span class="type">{{ l.type }}</span>
+          @if (l.distanceKm) {
+          <span class="distance">{{ l.distanceKm }} km</span>
           }
-          <div>{{ c.message }}</div>
         </li>
         }
       </ul>
-      } @else {
-      <div class="muted">Aucun commentaire pour le moment.</div>
-      }
+    </div>
+    }
+  </section>
+  }
+
+  <!-- MONUMENTS -->
+  @if (activeTab() === 'monuments') {
+  <section class="panel monuments" [@sectionFade]>
+    <div class="monument-filter">
+      <input
+        type="text"
+        placeholder="Recherche monument…"
+        [value]="monumentSearch()"
+        (input)="setMonumentSearch($any($event.target).value)"
+      />
+      <select
+        [value]="monumentCategory()"
+        (change)="setMonumentCategory($any($event.target).value)"
+      >
+        <option value="">Toutes catégories</option>
+        @for (c of monumentCategories(); track c) {
+        <option [value]="c">{{ c }}</option>
+        }
+      </select>
     </div>
 
-    <div class="panel">
-      <h3>Localisation</h3>
-      @if (patrimoine.latitude && patrimoine.longitude) {
-      <div class="map-frame">
-        <iframe
-          title="Carte"
-          [src]="
-            'https://www.google.com/maps?q=' +
-              patrimoine.latitude +
-              ',' +
-              patrimoine.longitude +
-              '&hl=fr&z=14&output=embed' | safeUrl
-          "
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
-      </div>
-      } @else {
-      <div class="muted">Coordonnées indisponibles.</div>
-      }
-    </div>
-  </div>
-
-  <section class="monuments">
-    <h3>Monuments</h3>
-    <div class="grid">
-      @for (m of patrimoine.monuments; track m.id) {
-      <a class="monument-card" [routerLink]="['/patrimoines', patrimoine!.id, 'monuments', m.id]">
-        <img [src]="m.photoCarousel[0]" [alt]="m.nom" />
-        <div class="content">
+    @if (filteredMonuments().length) {
+    <div class="monument-grid">
+      @for (m of filteredMonuments(); track m.id) {
+      <a
+        class="monument-mini"
+        [routerLink]="['/patrimoines', patrimoine()!.id, 'monuments', m.id]"
+        aria-label="Voir {{ m.nom }}"
+      >
+        <div class="thumb">
+          @if (m.photoCarousel?.length) {
+          <img [src]="m.photoCarousel[0]" [alt]="m.nom" loading="lazy" />
+          } @else {
+          <div class="blank">
+            <svg viewBox="0 0 24 24">
+              <path fill="currentColor" d="M3 5h18v14H3V5Zm2 2v10h14V7H5Zm3 2 4 4 4-4 3 6H6l2-6Z" />
+            </svg>
+          </div>
+          }
+        </div>
+        <div class="meta">
           <h4>{{ m.nom }}</h4>
-          <p class="muted">{{ m.categories.join(', ') }}</p>
+          @if (m.description) {
+          <p class="excerpt">
+            {{ m.description | slice : 0 : 70 }}{{ m.description.length > 70 ? '…' : '' }}
+          </p>
+          }
+          <div class="row-icons">
+            <span class="flag" [class.good]="m.ouvert" [class.bad]="!m.ouvert">
+              <svg viewBox="0 0 24 24">
+                <path fill="currentColor" d="M6 2h2v19H6V2Zm4 3h8l-3 4 3 4h-8V5Z" />
+              </svg>
+              {{ m.ouvert ? 'Ouvert' : 'Fermé' }}
+            </span>
+            @if (m.estClasse) {
+            <span class="flag badge">
+              <svg viewBox="0 0 24 24">
+                <path
+                  fill="currentColor"
+                  d="m12 2 2.39 4.85L20 7.27l-3.64 3.55.86 5.02L12 13.77 6.78 15.84l.86-5.02L4 7.27l5.61-.42L12 2Z"
+                />
+              </svg>
+              Classé
+            </span>
+            } @if (m.comments.length) {
+            <span class="flag comments">
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M4 4h16v12H7l-3 3V4Z" /></svg>
+              {{ m.comments.length }}
+            </span>
+            }
+          </div>
         </div>
       </a>
       }
     </div>
+    } @else {
+    <div class="empty">Aucun monument selon ce filtre.</div>
+    }
   </section>
+  }
 
+  <!-- COMMENTS -->
+  @if (activeTab() === 'comments') {
+  <section class="panel comments-section" [@sectionFade]>
+    <h2>Commentaires agrégés</h2>
+    @if (allComments().length) {
+    <ul class="comments-list">
+      @for (c of allComments(); track c.id) {
+      <li class="comment-item">
+        <div class="avatar">{{ initiales(c.nom) }}</div>
+        <div class="body">
+          <div class="head">
+            <span class="author">{{ c.nom }}</span>
+            <span class="date">{{ c.date }}</span>
+            @if (c.etat) {
+            <span class="status" [class]="commentStatusClass(c.etat)">{{ c.etat }}</span>
+            } @if (c.note) {
+            <span class="rating">
+              @for (s of stars; track s) {
+              <svg viewBox="0 0 24 24" [class.filled]="s <= c.note!">
+                <path
+                  fill="currentColor"
+                  d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21Z"
+                />
+              </svg>
+              }
+            </span>
+            }
+          </div>
+          <p class="text">{{ c.message }}</p>
+        </div>
+      </li>
+      }
+    </ul>
+    } @else {
+    <div class="empty">Aucun commentaire disponible.</div>
+    }
+  </section>
+  }
+
+  <!-- MAP -->
+  @if (activeTab() === 'map') {
+  <section class="panel map-section" [@sectionFade]>
+    <h2>Localisation</h2>
+    @if (patrimoine()!.latitude && patrimoine()!.longitude) {
+    <div class="map-frame">
+      <iframe
+        title="Carte du site"
+        [src]="
+          'https://www.google.com/maps?q=' +
+            patrimoine()!.latitude +
+            ',' +
+            patrimoine()!.longitude +
+            '&hl=fr&z=14&output=embed' | safeUrl
+        "
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
+    <a
+      class="map-link"
+      target="_blank"
+      rel="noopener"
+      [href]="
+        'https://www.google.com/maps?q=' + patrimoine()!.latitude + ',' + patrimoine()!.longitude
+      "
+    >
+      Ouvrir dans Google Maps
+      <svg viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3ZM5 5h7v2H7v10h10v-5h2v7H5V5Z"
+        />
+      </svg>
+    </a>
+    } @else {
+    <div class="empty big">
+      <svg viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M12 2a10 10 0 0 1 9.95 10.89 8 8 0 0 0-9.16-9.16A10 10 0 0 1 12 2Z"
+        />
+      </svg>
+      Coordonnées non disponibles
+    </div>
+    }
+  </section>
   } }
 </section>
