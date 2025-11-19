@@ -53,8 +53,8 @@
   z-index: 2;
 }
 .badge {
-  background: rgba(255,255,255,.14);
-  color: #fff;
+  background: color-mix(in srgb,var(--color-accent-alt) 25%, transparent);
+  color: var(--color-text);
   font-size: .65rem;
   padding: 4px 8px;
   border-radius: 999px;
@@ -63,7 +63,7 @@
   border: 1px solid rgba(255,255,255,.25);
   font-weight: 600;
 }
-.badge.extra { background: rgba(14,165,233,.55); }
+.badge.extra { background: color-mix(in srgb,var(--color-accent) 55%, transparent); }
 
 .content {
   position: relative;
@@ -87,4 +87,4 @@
   color: #94a3b8;
   letter-spacing: .3px;
 }
-.location svg { width: 14px; height: 14px; color: #0ea5e9; }
+.location svg { width: 14px; height: 14px; color: var(--color-accent-alt); }
