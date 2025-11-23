@@ -52,7 +52,7 @@ import { Component, Input } from '@angular/core';
   ],
 })
 export class CategoryChipsComponent {
-  @Input({ required: true }) categories: string[] = [];
+  @Input({ required: true }) categories!: string[];
   @Input() showIcon = true;
   @Input() cssClass = '';
 }
