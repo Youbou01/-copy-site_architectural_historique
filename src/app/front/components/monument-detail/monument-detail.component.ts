@@ -12,11 +12,20 @@ import { CarouselComponent } from '../ui/carousel/carousel.component';
 import { SafeUrlPipe } from '../../../pipes/safe-url.pipe';
 import { ImageService, FetchedImage } from '../../../services/image.service';
 import { Observable } from 'rxjs';
+import { RatingStarsComponent } from '../shared/rating-stars.component';
+import { CategoryChipsComponent } from '../shared/category-chips.component';
 
 @Component({
   selector: 'app-monument-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, CarouselComponent, SafeUrlPipe],
+  imports: [
+    CommonModule,
+    RouterLink,
+    CarouselComponent,
+    SafeUrlPipe,
+    RatingStarsComponent,
+    CategoryChipsComponent,
+  ],
   animations: [
     trigger('pageFade', [
       transition(':enter', [
@@ -41,9 +50,6 @@ export class MonumentDetailComponent {
   error = signal<string | null>(null);
   monument = signal<SiteHistorique | null>(null);
   parentId = signal<string | null>(null);
-
-  // UI helpers
-  readonly stars = [1, 2, 3, 4, 5] as const;
 
   avgNote = computed<number | null>(() => {
     const comments = this.monument()?.comments ?? [];

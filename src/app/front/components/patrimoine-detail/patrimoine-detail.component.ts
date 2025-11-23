@@ -10,13 +10,22 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { CarouselComponent } from '../ui/carousel/carousel.component';
 import { SafeUrlPipe } from '../../../pipes/safe-url.pipe';
 import { ImageService } from '../../../services/image.service';
+import { RatingStarsComponent } from '../shared/rating-stars.component';
+import { CategoryChipsComponent } from '../shared/category-chips.component';
 
 type TabKey = 'about' | 'monuments' | 'comments' | 'map';
 
 @Component({
   selector: 'app-patrimoine-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, CarouselComponent, SafeUrlPipe],
+  imports: [
+    CommonModule,
+    RouterLink,
+    CarouselComponent,
+    SafeUrlPipe,
+    RatingStarsComponent,
+    CategoryChipsComponent,
+  ],
   animations: [
     trigger('pageFade', [
       transition(':enter', [
@@ -50,8 +59,6 @@ export class PatrimoineDetailComponent {
   activeTab = signal<TabKey>('about');
   monumentSearch = signal('');
   monumentCategory = signal('');
-
-  readonly stars = [1, 2, 3, 4, 5] as const;
 
   constructor() {
     const id = this.route.snapshot.paramMap.get('patrimoineId');
@@ -125,12 +132,6 @@ export class PatrimoineDetailComponent {
       ...local.map((_, i) => `Photo ${i + 1} de ${p.nom}`),
       ...extra.map((img, i) => img.alt || `Image additionnelle ${i + 1} de ${p.nom}`),
     ];
-  });
-
-  // Rounded integer average for star fill comparison in template
-  roundedAverage = computed<number>(() => {
-    const avg = this.averageRating();
-    return avg == null ? 0 : Math.round(avg);
   });
 
   monumentCategories = computed(() => {

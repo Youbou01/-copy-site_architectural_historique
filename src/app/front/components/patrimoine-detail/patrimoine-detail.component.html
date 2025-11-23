@@ -12,17 +12,11 @@
 
     @if (averageRating() !== null) {
     <div class="agg-rating">
-      <div class="stars">
-        @for (s of stars; track s) {
-        <svg viewBox="0 0 24 24" [class.filled]="s <= roundedAverage()">
-          <path
-            fill="currentColor"
-            d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21Z"
-          />
-        </svg>
-        }
-      </div>
-      <span class="value">{{ averageRating() }}</span>
+      <app-rating-stars
+        [value]="averageRating()"
+        [showValue]="true"
+        cssClass="inline-stars"
+      />
       <span class="count">({{ allComments().length }} avis)</span>
     </div>
     }
@@ -83,19 +77,7 @@
         {{ patrimoine()!.localisation }}
       </p>
       }
-      <div class="chips">
-        @for (cat of patrimoine()!.categories; track cat) {
-        <span class="chip">
-          <svg viewBox="0 0 24 24">
-            <path
-              fill="currentColor"
-              d="M20.59 13.41 12 4.83H4v8.17l8.59 8.59a2 2 0 0 0 2.82 0l5.18-5.18a2 2 0 0 0 0-2.82ZM7 9a2 2 0 1 1 2-2 2 2 0 0 1-2 2Z"
-            />
-          </svg>
-          {{ cat }}
-        </span>
-        }
-      </div>
+      <app-category-chips [categories]="patrimoine()!.categories" />
     </div>
   </header>
 
@@ -367,16 +349,7 @@
             @if (c.etat) {
             <span class="status" [class]="commentStatusClass(c.etat)">{{ c.etat }}</span>
             } @if (c.note) {
-            <span class="rating">
-              @for (s of stars; track s) {
-              <svg viewBox="0 0 24 24" [class.filled]="s <= c.note!">
-                <path
-                  fill="currentColor"
-                  d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21Z"
-                />
-              </svg>
-              }
-            </span>
+            <app-rating-stars [value]="c.note" cssClass="rating" />
             }
           </div>
           <p class="text">{{ c.message }}</p>
