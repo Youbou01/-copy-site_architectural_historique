@@ -14,6 +14,7 @@ import { ImageService, FetchedImage } from '../../../services/image.service';
 import { Observable } from 'rxjs';
 import { RatingStarsComponent } from '../shared/rating-stars.component';
 import { CategoryChipsComponent } from '../shared/category-chips.component';
+import { getInitials } from '../../utils/common.utils';
 
 @Component({
   selector: 'app-monument-detail',
@@ -149,10 +150,7 @@ export class MonumentDetailComponent {
       .subscribe();
   }
 
-  initiales(nom: string): string {
-    const parts = nom.trim().split(/\s+/);
-    return (parts[0]?.[0] ?? '').toUpperCase() + (parts[1]?.[0] ?? '').toUpperCase();
-  }
+  initiales = getInitials;
 
   isFavoriteMonument() {
     return this.favorites.isMonumentFavorite(this.parentId(), this.monument());

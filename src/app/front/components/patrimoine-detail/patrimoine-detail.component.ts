@@ -12,6 +12,7 @@ import { SafeUrlPipe } from '../../../pipes/safe-url.pipe';
 import { ImageService } from '../../../services/image.service';
 import { RatingStarsComponent } from '../shared/rating-stars.component';
 import { CategoryChipsComponent } from '../shared/category-chips.component';
+import { getInitials, getCommentStatusClass } from '../../utils/common.utils';
 
 type TabKey = 'about' | 'monuments' | 'comments' | 'map';
 
@@ -169,23 +170,8 @@ export class PatrimoineDetailComponent {
     this.monumentCategory.set(val);
   }
 
-  initiales(nom: string): string {
-    const parts = nom.trim().split(/\s+/);
-    return (parts[0]?.[0] ?? '').toUpperCase() + (parts[1]?.[0] ?? '').toUpperCase();
-  }
-
-  commentStatusClass(etat: string) {
-    switch (etat) {
-      case 'approuvé':
-        return 'approved';
-      case 'en attente':
-        return 'pending';
-      case 'rejeté':
-        return 'rejected';
-      default:
-        return '';
-    }
-  }
+  initiales = getInitials;
+  commentStatusClass = getCommentStatusClass;
 
   isFavoritePatrimoine() {
     return this.favorites.isPatrimoineFavorite(this.patrimoine());
