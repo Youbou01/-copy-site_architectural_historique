@@ -1,0 +1,74 @@
+<section class="monuments-shell">
+  <header class="top">
+    <h1>Monuments</h1>
+    <div class="filters">
+      <input
+        type="text"
+        placeholder="Recherche…"
+        [value]="search()"
+        (input)="setSearch($any($event.target).value)"
+      />
+      <select [value]="category()" (change)="setCategory($any($event.target).value)">
+        <option value="">Toutes catégories</option>
+        @for (c of categories(); track c) {
+        <option [value]="c">{{ c }}</option>
+        }
+      </select>
+    </div>
+  </header>
+
+  @if (filtered().length) {
+  <div class="grid">
+    @for (m of filtered(); track m.parentId + '-' + m.id) {
+    <a
+      class="card"
+      [routerLink]="['/patrimoines', m.parentId, 'monuments', m.id]"
+      aria-label="Voir {{ m.nom }}"
+    >
+      <div class="thumb">
+        @if (m.photo) {
+        <img [src]="m.photo" [alt]="m.nom" loading="lazy" />
+        } @else {
+        <div class="blank">—</div>
+        }
+        <button
+          type="button"
+          class="fav-mini"
+          (click)="$event.preventDefault(); toggleFav(m)"
+          [attr.aria-pressed]="isFav(m)"
+          [title]="isFav(m) ? 'Retirer des favoris' : 'Ajouter aux favoris'"
+        >
+          <svg viewBox="0 0 24 24" [class.filled]="isFav(m)">
+            <path
+              fill="currentColor"
+              d="M12 21.35 10.55 20.03C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09A6.36 6.36 0 0 1 16.5 3C19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35Z"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="meta">
+        <h2>{{ m.nom }}</h2>
+        <p class="parent">Site: {{ m.parentNom }}</p>
+        @if (m.description) {
+        <p class="excerpt">
+          {{ m.description | slice : 0 : 80 }}{{ m.description.length > 80 ? '…' : '' }}
+        </p>
+        }
+        <div class="tags">
+          @for (c of m.categories; track c) { <span class="tag">{{ c }}</span> }
+        </div>
+        <div class="stats-row">
+          <span class="flag" [class.good]="m.ouvert" [class.bad]="!m.ouvert">{{
+            m.ouvert ? 'Ouvert' : 'Fermé'
+          }}</span>
+          @if (m.estClasse) { <span class="flag badge">Classé</span> } @if (m.comments) {
+          <span class="flag comments">{{ m.comments }} avis</span> }
+        </div>
+      </div>
+    </a>
+    }
+  </div>
+  } @else {
+  <div class="empty">Aucun monument ne correspond à ce filtre.</div>
+  }
+</section>

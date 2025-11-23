@@ -575,9 +575,9 @@
           "description": "Musée régional présentant la vie traditionnelle tunisienne et l'architecture résidentielle.",
           "origineHistorique": "Ottomane",
           "photoCarousel": [
-            "public/images/dar_ben_abdallah_1.jpg",
-            "public/images/dar_ben_abdallah_2.jpg",
-            "public/images/dar_ben_abdallah_3.jpg"
+            "images/dar_ben_abdallah_1.jpg",
+            "images/dar_ben_abdallah_2.jpg",
+            "images/dar_ben_abdallah_3.jpg"
           ],
           "latitude": 36.8058,
           "longitude": 10.1813,

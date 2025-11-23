@@ -3,221 +3,299 @@
   <a class="back" [routerLink]="['/patrimoines', parentId()!]">
     <span class="icon">
       <!-- Heroicon: Arrow Left -->
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M10.5 19.5 3 12l7.5-7.5 1.06 1.06L6.12 11h14.38v2H6.12l5.44 5.44-1.06 1.06Z"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M10.5 19.5 3 12l7.5-7.5 1.06 1.06L6.12 11h14.38v2H6.12l5.44 5.44-1.06 1.06Z"
+        />
+      </svg>
     </span>
     Retour à la place
   </a>
-  }
-
-  @if (loading()) {
+  } @if (loading()) {
   <div class="loading"><span>Chargement…</span></div>
-  } @else {
-    @if (error()) {
-      <div class="error">{{ error() }}</div>
-    } @else {
-      @if (monument()) {
-        <article class="content">
-          <header class="header">
-            <div class="title-wrap">
-              <h2 class="title">
-                {{ monument()!.nom }}
-              </h2>
+  } @else { @if (error()) {
+  <div class="error">{{ error() }}</div>
+  } @else { @if (monument()) {
+  <article class="content">
+    <header class="header">
+      <div class="title-wrap">
+        <div class="title-row">
+          <h2 class="title">{{ monument()!.nom }}</h2>
+          <button
+            type="button"
+            class="fav-btn"
+            (click)="toggleFavoriteMonument()"
+            [attr.aria-pressed]="isFavoriteMonument()"
+            [title]="isFavoriteMonument() ? 'Retirer des favoris' : 'Ajouter aux favoris'"
+          >
+            <svg viewBox="0 0 24 24" [class.filled]="isFavoriteMonument()">
+              <path
+                d="M12 21.35 10.55 20.03C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09A6.36 6.36 0 0 1 16.5 3C19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35Z"
+              />
+            </svg>
+            <span class="label">{{ isFavoriteMonument() ? 'Favori' : 'Ajouter' }}</span>
+          </button>
+        </div>
 
-              @if (monument()!.categories?.length) {
-                <div class="chips">
-                  @for (cat of monument()!.categories; track cat) {
-                    <span class="chip">
-                      <svg class="chip-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <!-- tag icon -->
-                        <path fill="currentColor" d="M20.59 13.41 12 4.83H4v8.17l8.59 8.59a2 2 0 0 0 2.82 0l5.18-5.18a2 2 0 0 0 0-2.82ZM7 9a2 2 0 1 1 2-2 2 2 0 0 1-2 2Z"/>
-                      </svg>
-                      {{ cat }}
-                    </span>
+        @if (monument()!.categories?.length) {
+        <div class="chips">
+          @for (cat of monument()!.categories; track cat) {
+          <span class="chip">
+            <svg class="chip-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <!-- tag icon -->
+              <path
+                fill="currentColor"
+                d="M20.59 13.41 12 4.83H4v8.17l8.59 8.59a2 2 0 0 0 2.82 0l5.18-5.18a2 2 0 0 0 0-2.82ZM7 9a2 2 0 1 1 2-2 2 2 0 0 1-2 2Z"
+              />
+            </svg>
+            {{ cat }}
+          </span>
+          }
+        </div>
+        } @if (avgNote() !== null) {
+        <div class="rating-summary" title="Note moyenne">
+          <div class="stars">
+            @for (n of stars; track n) {
+            <svg viewBox="0 0 24 24" aria-hidden="true" [class.filled]="avgNote()! >= n - 0.5">
+              <path
+                d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27Z"
+                fill="currentColor"
+              />
+            </svg>
+            }
+          </div>
+          <span class="rating-value">{{ avgNote() }}</span>
+        </div>
+        }
+      </div>
+    </header>
+
+    @if (monument()!.photoCarousel && monument()!.photoCarousel.length) {
+    <app-carousel
+      [images]="combinedImages()"
+      [altTexts]="altTexts()"
+      variant="focus"
+      [framed]="true"
+      [kenBurns]="true"
+      [loop]="true"
+      [showThumbnails]="true"
+      [objectFit]="'cover'"
+      [intervalMs]="5200"
+    />
+    } @if (monument()!.description) {
+    <p class="description">{{ monument()!.description }}</p>
+    }
+
+    <div class="info">
+      <div class="info-item">
+        <span class="icon">
+          <!-- lock open/closed -->
+          @if (monument()!.ouvert) {
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M17 8h-1V6a4 4 0 1 0-8 0h2a2 2 0 1 1 4 0v2H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2Z"
+            />
+          </svg>
+          } @else {
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M12 2a5 5 0 0 0-5 5h2a3 3 0 1 1 6 0v1H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5Z"
+            />
+          </svg>
+          }
+        </span>
+        <strong>Ouvert:</strong> {{ monument()!.ouvert ? 'Oui' : 'Non' }}
+      </div>
+
+      <div class="info-item">
+        <span class="icon">
+          <!-- banknotes -->
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M3 6h18v12H3V6Zm2 2v8h14V8H5Zm4 6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+            />
+          </svg>
+        </span>
+        <strong>Prix:</strong> {{ monument()!.prixEntree }} DT
+      </div>
+
+      <div class="info-item">
+        <span class="icon">
+          <!-- check badge -->
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="m12 2 2.39 4.85L20 7.27l-3.64 3.55.86 5.02L12 13.77 6.78 15.84l.86-5.02L4 7.27l5.61-.42L12 2Z"
+            />
+          </svg>
+        </span>
+        <strong>Classé:</strong> {{ monument()!.estClasse ? 'Oui' : 'Non' }}
+      </div>
+
+      <div class="info-item">
+        <span class="icon">
+          <!-- user group -->
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm-8 0a3 3 0 1 0-3-3 3 3 0 0 0 3 3Zm0 2c-3.31 0-6 1.79-6 4v2h8v-2c0-1.08.39-2.07 1.06-2.9A7 7 0 0 0 8 13Zm8 0c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4Z"
+            />
+          </svg>
+        </span>
+        <strong>Guides:</strong> {{ monument()!.visitesGuideesDisponibles ? 'Oui' : 'Non' }}
+      </div>
+
+      <div class="info-item">
+        <span class="icon">
+          <!-- calendar -->
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v3H2V6a2 2 0 0 1 2-2h3V2Zm15 8v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10h20Z"
+            />
+          </svg>
+        </span>
+        <strong>Date:</strong> {{ monument()!.dateConstruction || '—' }}
+      </div>
+
+      <div class="info-item info-cats">
+        <span class="icon">
+          <!-- tags -->
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M20.59 13.41 12 4.83H4v8.17l8.59 8.59a2 2 0 0 0 2.82 0l5.18-5.18a2 2 0 0 0 0-2.82Z"
+            />
+          </svg>
+        </span>
+        <strong>Catégories:</strong>
+        <span class="chip-row">
+          @for (cat of monument()!.categories; track cat) {
+          <span class="chip small">{{ cat }}</span>
+          }
+        </span>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3 class="panel-title">
+        <span class="icon">
+          <!-- chat bubble -->
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M4 4h16v12H7l-3 3V4Z" />
+          </svg>
+        </span>
+        Commentaires
+        <span class="count-badge" aria-label="nombre de commentaires">
+          {{ monument()!.comments.length }}
+        </span>
+      </h3>
+
+      @if (monument()!.comments.length) {
+      <ul class="comments">
+        @for (c of monument()!.comments; track c.id) {
+        <li class="comment">
+          <div class="avatar" [attr.aria-label]="'Avatar ' + c.nom">
+            {{ initiales(c.nom) }}
+          </div>
+          <div class="comment-body">
+            <div class="comment-head">
+              <div class="author">
+                <strong>{{ c.nom }}</strong>
+                <span class="date">• {{ c.date }}</span>
+              </div>
+              <div class="meta">
+                @if (c.etat) {
+                <span
+                  class="status"
+                  [class.pending]="c.etat === 'en attente'"
+                  [class.rejected]="c.etat === 'rejeté'"
+                  [class.approved]="c.etat === 'approuvé'"
+                >
+                  {{ c.etat }}
+                </span>
+                } @if (c.note) {
+                <div class="stars mini" title="Note">
+                  @for (n of stars; track n) {
+                  <svg viewBox="0 0 24 24" aria-hidden="true" [class.filled]="n <= c.note!">
+                    <path
+                      d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27Z"
+                      fill="currentColor"
+                    />
+                  </svg>
                   }
                 </div>
-              }
-
-              @if (avgNote() !== null) {
-                <div class="rating-summary" title="Note moyenne">
-                  <div class="stars">
-                    @for (n of stars; track n) {
-                      <svg viewBox="0 0 24 24" aria-hidden="true"
-                           [class.filled]="avgNote()! >= (n - 0.5)">
-                        <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27Z"
-                              fill="currentColor"/>
-                      </svg>
-                    }
-                  </div>
-                  <span class="rating-value">{{ avgNote() }}</span>
-                </div>
-              }
-            </div>
-          </header>
-
-          @if (monument()!.photoCarousel && monument()!.photoCarousel.length) {
-            <app-carousel [images]="monument()!.photoCarousel" height="360px" />
-          }
-
-          @if (monument()!.description) {
-            <p class="description">{{ monument()!.description }}</p>
-          }
-
-          <div class="info">
-            <div class="info-item">
-              <span class="icon">
-                <!-- lock open/closed -->
-                @if (monument()!.ouvert) {
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17 8h-1V6a4 4 0 1 0-8 0h2a2 2 0 1 1 4 0v2H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2Z"/></svg>
-                } @else {
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a5 5 0 0 0-5 5h2a3 3 0 1 1 6 0v1H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5Z"/></svg>
                 }
-              </span>
-              <strong>Ouvert:</strong> {{ monument()!.ouvert ? 'Oui' : 'Non' }}
-            </div>
-
-            <div class="info-item">
-              <span class="icon">
-                <!-- banknotes -->
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 6h18v12H3V6Zm2 2v8h14V8H5Zm4 6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>
-              </span>
-              <strong>Prix:</strong> {{ monument()!.prixEntree }} DT
-            </div>
-
-            <div class="info-item">
-              <span class="icon">
-                <!-- check badge -->
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m12 2 2.39 4.85L20 7.27l-3.64 3.55.86 5.02L12 13.77 6.78 15.84l.86-5.02L4 7.27l5.61-.42L12 2Z"/></svg>
-              </span>
-              <strong>Classé:</strong> {{ monument()!.estClasse ? 'Oui' : 'Non' }}
-            </div>
-
-            <div class="info-item">
-              <span class="icon">
-                <!-- user group -->
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm-8 0a3 3 0 1 0-3-3 3 3 0 0 0 3 3Zm0 2c-3.31 0-6 1.79-6 4v2h8v-2c0-1.08.39-2.07 1.06-2.9A7 7 0 0 0 8 13Zm8 0c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4Z"/></svg>
-              </span>
-              <strong>Guides:</strong> {{ monument()!.visitesGuideesDisponibles ? 'Oui' : 'Non' }}
-            </div>
-
-            <div class="info-item">
-              <span class="icon">
-                <!-- calendar -->
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v3H2V6a2 2 0 0 1 2-2h3V2Zm15 8v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10h20Z"/></svg>
-              </span>
-              <strong>Date:</strong> {{ monument()!.dateConstruction || '—' }}
-            </div>
-
-            <div class="info-item info-cats">
-              <span class="icon">
-                <!-- tags -->
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.59 13.41 12 4.83H4v8.17l8.59 8.59a2 2 0 0 0 2.82 0l5.18-5.18a2 2 0 0 0 0-2.82Z"/></svg>
-              </span>
-              <strong>Catégories:</strong>
-              <span class="chip-row">
-                @for (cat of monument()!.categories; track cat) {
-                  <span class="chip small">{{ cat }}</span>
-                }
-              </span>
-            </div>
-          </div>
-
-          <div class="panel">
-            <h3 class="panel-title">
-              <span class="icon">
-                <!-- chat bubble -->
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 4h16v12H7l-3 3V4Z"/></svg>
-              </span>
-              Commentaires
-              <span class="count-badge" aria-label="nombre de commentaires">
-                {{ monument()!.comments.length }}
-              </span>
-            </h3>
-
-            @if (monument()!.comments.length) {
-              <ul class="comments">
-                @for (c of monument()!.comments; track c.id) {
-                  <li class="comment">
-                    <div class="avatar" [attr.aria-label]="'Avatar ' + c.nom">
-                      {{ initiales(c.nom) }}
-                    </div>
-                    <div class="comment-body">
-                      <div class="comment-head">
-                        <div class="author">
-                          <strong>{{ c.nom }}</strong>
-                          <span class="date">• {{ c.date }}</span>
-                        </div>
-                        <div class="meta">
-                          @if (c.etat) {
-                            <span class="status" [class.pending]="c.etat === 'en attente'"
-                                              [class.rejected]="c.etat === 'rejeté'"
-                                              [class.approved]="c.etat === 'approuvé'">
-                              {{ c.etat }}
-                            </span>
-                          }
-                          @if (c.note) {
-                            <div class="stars mini" title="Note">
-                              @for (n of stars; track n) {
-                                <svg viewBox="0 0 24 24" aria-hidden="true" [class.filled]="n <= c.note!">
-                                  <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27Z" fill="currentColor"/>
-                                </svg>
-                              }
-                            </div>
-                          }
-                        </div>
-                      </div>
-                      <div class="comment-text">
-                        {{ c.message }}
-                      </div>
-                    </div>
-                  </li>
-                }
-              </ul>
-            } @else {
-              <div class="muted">Aucun commentaire.</div>
-            }
-          </div>
-
-          <div class="panel">
-            <h3 class="panel-title">
-              <span class="icon">
-                <!-- map pin -->
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5Z"/></svg>
-              </span>
-              Localisation
-              @if (monument()!.latitude && monument()!.longitude) {
-                <a class="map-link"
-                   target="_blank"
-                   rel="noopener"
-                   [href]="'https://www.google.com/maps?q=' + monument()!.latitude + ',' + monument()!.longitude">
-                  Voir sur Google Maps
-                  <svg viewBox="0 0 24 24" class="ext" aria-hidden="true"><path fill="currentColor" d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3ZM5 5h7v2H7v10h10v-5h2v7H5V5Z"/></svg>
-                </a>
-              }
-            </h3>
-
-            @if (monument()!.latitude && monument()!.longitude) {
-              <div class="map-frame">
-                <iframe
-                  title="Carte"
-                  [src]="
-                    'https://www.google.com/maps?q=' +
-                      monument()!.latitude +
-                      ',' +
-                      monument()!.longitude +
-                      '&hl=fr&z=14&output=embed' | safeUrl
-                  "
-                  loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade"
-                ></iframe>
               </div>
-            } @else {
-              <div class="muted">Coordonnées indisponibles.</div>
-            }
+            </div>
+            <div class="comment-text">
+              {{ c.message }}
+            </div>
           </div>
-        </article>
+        </li>
+        }
+      </ul>
       } @else {
-        <div class="empty">Aucun détail disponible.</div>
+      <div class="muted">Aucun commentaire.</div>
       }
-    }
-  }
+    </div>
+
+    <div class="panel">
+      <h3 class="panel-title">
+        <span class="icon">
+          <!-- map pin -->
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5Z"
+            />
+          </svg>
+        </span>
+        Localisation @if (monument()!.latitude && monument()!.longitude) {
+        <a
+          class="map-link"
+          target="_blank"
+          rel="noopener"
+          [href]="
+            'https://www.google.com/maps?q=' + monument()!.latitude + ',' + monument()!.longitude
+          "
+        >
+          Voir sur Google Maps
+          <svg viewBox="0 0 24 24" class="ext" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3ZM5 5h7v2H7v10h10v-5h2v7H5V5Z"
+            />
+          </svg>
+        </a>
+        }
+      </h3>
+
+      @if (monument()!.latitude && monument()!.longitude) {
+      <div class="map-frame">
+        <iframe
+          title="Carte"
+          [src]="
+            'https://www.google.com/maps?q=' +
+              monument()!.latitude +
+              ',' +
+              monument()!.longitude +
+              '&hl=fr&z=14&output=embed' | safeUrl
+          "
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+      } @else {
+      <div class="muted">Coordonnées indisponibles.</div>
+      }
+    </div>
+  </article>
+  } @else {
+  <div class="empty">Aucun détail disponible.</div>
+  } } }
 </section>

@@ -36,9 +36,10 @@
 
   <header class="hero">
     <div class="media">
-      @if (patrimoine()!.photoCarousel?.length) {
+      @if (combinedImages().length) {
       <app-carousel
-        [images]="patrimoine()!.photoCarousel"
+        [images]="combinedImages()"
+        [altTexts]="altTexts()"
         height="420px"
         [loop]="true"
         [options]="{ dragFree: true }"
@@ -54,7 +55,23 @@
     </div>
 
     <div class="meta">
-      <h1 class="title">{{ patrimoine()!.nom }}</h1>
+      <div class="title-row">
+        <h1 class="title">{{ patrimoine()!.nom }}</h1>
+        <button
+          type="button"
+          class="fav-btn"
+          (click)="toggleFavoritePatrimoine()"
+          [attr.aria-pressed]="isFavoritePatrimoine()"
+          [title]="isFavoritePatrimoine() ? 'Retirer des favoris' : 'Ajouter aux favoris'"
+        >
+          <svg viewBox="0 0 24 24" [class.filled]="isFavoritePatrimoine()">
+            <path
+              d="M12 21.35 10.55 20.03C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09A6.36 6.36 0 0 1 16.5 3C19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35Z"
+            />
+          </svg>
+          <span class="label">{{ isFavoritePatrimoine() ? 'Favori' : 'Ajouter' }}</span>
+        </button>
+      </div>
       @if (patrimoine()!.localisation) {
       <p class="location">
         <svg viewBox="0 0 24 24">
@@ -209,7 +226,7 @@
       </div>
     </div>
 
-    @if (patrimoine()!.horaires?.length) {
+    @if (patrimoine()!.horaires.length) {
     <div class="sub-panel">
       <h3>
         <svg viewBox="0 0 24 24">
@@ -226,7 +243,7 @@
         }
       </ul>
     </div>
-    } @if (patrimoine()!.lieuxProches?.length) {
+    } @if (patrimoine()!.lieuxProches.length) {
     <div class="sub-panel">
       <h3>
         <svg viewBox="0 0 24 24">
@@ -283,7 +300,7 @@
         aria-label="Voir {{ m.nom }}"
       >
         <div class="thumb">
-          @if (m.photoCarousel?.length) {
+          @if (m.photoCarousel.length) {
           <img [src]="m.photoCarousel[0]" [alt]="m.nom" loading="lazy" />
           } @else {
           <div class="blank">

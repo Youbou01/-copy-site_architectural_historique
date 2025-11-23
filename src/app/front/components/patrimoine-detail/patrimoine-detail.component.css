@@ -125,15 +125,49 @@
 .meta {
   display: flex;
   flex-direction: column;
+  gap: 4px;
   padding: 8px 6px;
 }
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
 .title {
-  margin: 0 0 4px;
+  margin: 0;
   font-size: clamp(1.8rem, 4vw, 2.3rem);
-  background: linear-gradient(90deg, #fff, #94a3b8);
-  -webkit-background-clip: text;
-  color: transparent;
   letter-spacing: 0.5px;
+}
+.fav-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(6px);
+  line-height: 1;
+}
+.fav-btn svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+  color: var(--muted);
+}
+.fav-btn svg.filled {
+  color: var(--accent-alt);
+}
+.fav-btn svg path {
+  fill: currentColor;
+}
+.fav-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
 }
 .location {
   margin: 0 0 14px;

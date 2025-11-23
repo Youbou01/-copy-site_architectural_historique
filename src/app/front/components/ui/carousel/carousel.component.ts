@@ -5,12 +5,15 @@ import {
   Input,
   OnDestroy,
   ViewChild,
-  inject,
   signal,
-  effect
+  inject,
+  effect,
+  computed
 } from '@angular/core';
 import EmblaCarousel, { type EmblaCarouselType, type EmblaOptionsType } from 'embla-carousel';
 import { NgClass, NgFor } from '@angular/common';
+
+type CarouselVariant = 'default' | 'focus' | 'filmstrip' | 'split';
 
 @Component({
   selector: 'app-carousel',
@@ -21,20 +24,34 @@ import { NgClass, NgFor } from '@angular/common';
 })
 export class CarouselComponent implements AfterViewInit, OnDestroy {
   @Input() images: string[] = [];
-  @Input() height = '320px';
+  @Input() altTexts: string[] = [];              // parallel alt array (fallback to monument name in usage site)
+  @Input() height?: string;                      // optional override
   @Input() loop = true;
   @Input() options: EmblaOptionsType = {};
   @Input() autoplay = true;
-  @Input() intervalMs = 4200;
+  @Input() intervalMs = 4800;
   @Input() showThumbnails = true;
+  @Input() kenBurns = false;                     // enable subtle zoom animation
+  @Input() variant: CarouselVariant = 'default';
+  @Input() framed = false;                       // independent aesthetic flag
+  @Input() objectFit: 'cover' | 'contain' = 'cover';
+  @Input() disableProgress = false;
 
   @ViewChild('viewport', { static: true }) viewportRef!: ElementRef<HTMLDivElement>;
+
   private embla?: EmblaCarouselType;
-  private host = inject(ElementRef<HTMLElement>);
   private timer: any;
+  private host = inject(ElementRef<HTMLElement>);
 
   activeIndex = signal(0);
   progress = signal(0);
+
+  // Dynamically derive computed height when not specified
+  autoHeight = computed(() => {
+    if (this.height) return this.height;
+    // Use a clamp for responsiveness
+    return 'clamp(300px, 55vh, 560px)';
+  });
 
   ngAfterViewInit(): void {
     if (!this.viewportRef?.nativeElement) return;
@@ -51,7 +68,9 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
       this.restartAutoplay();
     });
     this.restartAutoplay();
-    this.tickProgress();
+    if (!this.disableProgress) {
+      this.tickProgress();
+    }
   }
 
   ngOnDestroy(): void {
@@ -79,11 +98,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
       last = now;
       const inc = (delta / this.intervalMs) * 100;
       const next = this.progress() + inc;
-      if (next >= 100) {
-        this.progress.set(100);
-      } else {
-        this.progress.set(next);
-      }
+      this.progress.set(next >= 100 ? 100 : next);
       requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
@@ -98,5 +113,14 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   keyHandler(e: KeyboardEvent) {
     if (e.key === 'ArrowLeft') this.prev();
     if (e.key === 'ArrowRight') this.next();
+    // Vertical navigation for split variant thumbnails
+    if (this.variant === 'split') {
+      if (e.key === 'ArrowUp') this.prev();
+      if (e.key === 'ArrowDown') this.next();
+    }
+  }
+
+  altFor(i: number) {
+    return this.altTexts[i] || `Image ${i + 1}`;
   }
 }

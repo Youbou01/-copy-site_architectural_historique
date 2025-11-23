@@ -1,7 +1,12 @@
 <nav class="nav-shell">
   <div class="inner">
     <a class="brand" routerLink="/patrimoines">
-      <svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 12 12 3l9 9-9 9-9-9Zm9-5.83L5.83 12 12 18.17 18.17 12 12 6.17Z"/></svg>
+      <svg viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M3 12 12 3l9 9-9 9-9-9Zm9-5.83L5.83 12 12 18.17 18.17 12 12 6.17Z"
+        />
+      </svg>
       Patrimoine Tunisien
     </a>
     <ul class="menu">
@@ -11,21 +16,44 @@
         </a>
       </li>
       <li>
-        <span class="disabled">Monuments</span>
+        <a routerLink="/monuments" [class.active]="isActive('/monuments')">
+          <span>Monuments</span>
+        </a>
       </li>
       <li>
         <span class="disabled">Dashboard</span>
       </li>
     </ul>
     <div class="actions">
-      <button type="button" class="ghost" (click)="toggleTheme()" [attr.aria-label]="'Basculer thème ' + theme()">
+      <button
+        type="button"
+        class="ghost"
+        (click)="toggleTheme()"
+        [attr.aria-label]="'Basculer thème ' + theme()"
+      >
         @if (theme() === 'dark') {
-          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 3a9 9 0 0 0 0 18 9 9 0 0 0 0-18Zm0 2a7 7 0 0 1 0 14 7 7 0 0 1 0-14Z"/></svg>
+        <svg viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12 3a9 9 0 0 0 0 18 9 9 0 0 0 0-18Zm0 2a7 7 0 0 1 0 14 7 7 0 0 1 0-14Z"
+          />
+        </svg>
         } @else {
-          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M6.995 12a5 5 0 0 1 4.47-4.966 7 7 0 1 0 6.504 6.504A5 5 0 0 1 6.995 12Z"/></svg>
+        <svg viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M6.995 12a5 5 0 0 1 4.47-4.966 7 7 0 1 0 6.504 6.504A5 5 0 0 1 6.995 12Z"
+          />
+        </svg>
         }
       </button>
-      <button class="ghost disabled" title="À venir">Favoris</button>
+      <a
+        class="ghost"
+        routerLink="/favoris"
+        [class.active]="isActive('/favoris')"
+        title="Voir vos favoris"
+        >Favoris</a
+      >
       <button class="ghost disabled" title="À venir">Admin</button>
     </div>
   </div>

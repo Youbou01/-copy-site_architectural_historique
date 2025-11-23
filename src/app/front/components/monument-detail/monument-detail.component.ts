@@ -2,6 +2,7 @@ import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PatrimoineService } from '../../../services/patrimoine.service';
+import { FavoritesService } from '../../../services/favorites.service';
 import { SiteHistorique } from '../../../models/site-historique';
 import { combineLatest, of } from 'rxjs';
 import { map, switchMap, tap, catchError } from 'rxjs/operators';
@@ -9,6 +10,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CarouselComponent } from '../ui/carousel/carousel.component';
 import { SafeUrlPipe } from '../../../pipes/safe-url.pipe';
+import { ImageService, FetchedImage } from '../../../services/image.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-monument-detail',
@@ -28,7 +31,12 @@ import { SafeUrlPipe } from '../../../pipes/safe-url.pipe';
 export class MonumentDetailComponent {
   private route = inject(ActivatedRoute);
   private service = inject(PatrimoineService);
-  
+  private favorites = inject(FavoritesService);
+  private images = inject(ImageService);
+  unsplashImages$!: Observable<FetchedImage[]>;
+  commonsImages$!: Observable<FetchedImage[]>;
+  extraImages = signal<FetchedImage[]>([]); // merged
+
   loading = signal(true);
   error = signal<string | null>(null);
   monument = signal<SiteHistorique | null>(null);
@@ -43,6 +51,26 @@ export class MonumentDetailComponent {
     if (!rated.length) return null;
     const sum = rated.reduce((s, c) => s + (c.note ?? 0), 0);
     return Math.round((sum / rated.length) * 10) / 10;
+  });
+
+  // Accessible alt texts for carousel images
+  altTexts = computed<string[]>(() => {
+    const m = this.monument();
+    if (!m) return [];
+    const local = m.photoCarousel ?? [];
+    const extra = this.extraImages();
+    return [
+      ...local.map((_, i) => `Photo ${i + 1} de ${m.nom}`),
+      ...extra.map((img, i) => img.alt || `Image additionnelle ${i + 1} de ${m.nom}`),
+    ];
+  });
+
+  combinedImages = computed<string[]>(() => {
+    const m = this.monument();
+    if (!m) return [];
+    const local = m.photoCarousel ?? [];
+    const extra = this.extraImages().map((i) => i.src);
+    return [...local, ...extra];
   });
 
   constructor() {
@@ -96,6 +124,19 @@ export class MonumentDetailComponent {
           }
           this.monument.set(m);
           this.loading.set(false);
+          if (m) {
+            // Fetch both sources then merge
+            this.unsplashImages$ = this.images.fetchFor$(m.nom, 2);
+            this.commonsImages$ = this.images.fetchCommons$(m.nom, 2);
+            this.unsplashImages$.pipe(takeUntilDestroyed()).subscribe((u) => {
+              const current = this.extraImages();
+              this.extraImages.set([...u, ...current.filter((i) => i.source !== 'unsplash')]);
+            });
+            this.commonsImages$.pipe(takeUntilDestroyed()).subscribe((c) => {
+              const current = this.extraImages();
+              this.extraImages.set([...current.filter((i) => i.source !== 'commons'), ...c]);
+            });
+          }
         }),
         takeUntilDestroyed()
       )
@@ -105,5 +146,13 @@ export class MonumentDetailComponent {
   initiales(nom: string): string {
     const parts = nom.trim().split(/\s+/);
     return (parts[0]?.[0] ?? '').toUpperCase() + (parts[1]?.[0] ?? '').toUpperCase();
+  }
+
+  isFavoriteMonument() {
+    return this.favorites.isMonumentFavorite(this.parentId(), this.monument());
+  }
+
+  toggleFavoriteMonument() {
+    this.favorites.toggleMonument(this.parentId(), this.monument());
   }
 }

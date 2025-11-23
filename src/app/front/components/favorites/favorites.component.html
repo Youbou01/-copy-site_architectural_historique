@@ -1,0 +1,76 @@
+<section class="favorites-shell">
+  <h1>Vos favoris</h1>
+
+  <div class="favorites-grid">
+    <div class="fav-block">
+      <h2>Patrimoines ({{ patrimoines().length }})</h2>
+      @if (patrimoines().length) {
+      <ul class="fav-list">
+        @for (f of patrimoines(); track f.id) {
+        <li class="fav-item">
+          <a [routerLink]="['/patrimoines', f.id]" class="fav-link">
+            @if (f.photo) {
+            <img [src]="f.photo" [alt]="f.nom" loading="lazy" />
+            } @else {
+            <div class="thumb-blank">—</div>
+            }
+            <div class="info">
+              <strong>{{ f.nom }}</strong>
+              <span class="cats">{{ f.categories.join(', ') }}</span>
+            </div>
+          </a>
+          <button type="button" class="remove" (click)="remove('patrimoine', f.id)" title="Retirer">
+            <svg viewBox="0 0 24 24">
+              <path
+                fill="currentColor"
+                d="M19 6H5v14h14V6Zm-6 4h2v6h-2v-6Zm-4 0h2v6H9v-6ZM15 2H9v2H3v2h18V4h-6V2Z"
+              />
+            </svg>
+          </button>
+        </li>
+        }
+      </ul>
+      } @else {
+      <p class="empty">Aucun patrimoine favori.</p>
+      }
+    </div>
+
+    <div class="fav-block">
+      <h2>Monuments ({{ monuments().length }})</h2>
+      @if (monuments().length) {
+      <ul class="fav-list">
+        @for (f of monuments(); track f.parentId + '-' + f.id) {
+        <li class="fav-item">
+          <a [routerLink]="['/patrimoines', f.parentId, 'monuments', f.id]" class="fav-link">
+            @if (f.photo) {
+            <img [src]="f.photo" [alt]="f.nom" loading="lazy" />
+            } @else {
+            <div class="thumb-blank">—</div>
+            }
+            <div class="info">
+              <strong>{{ f.nom }}</strong>
+              <span class="cats">{{ f.categories.join(', ') }}</span>
+            </div>
+          </a>
+          <button
+            type="button"
+            class="remove"
+            (click)="remove('monument', f.id, f.parentId)"
+            title="Retirer"
+          >
+            <svg viewBox="0 0 24 24">
+              <path
+                fill="currentColor"
+                d="M19 6H5v14h14V6Zm-6 4h2v6h-2v-6Zm-4 0h2v6H9v-6ZM15 2H9v2H3v2h18V4h-6V2Z"
+              />
+            </svg>
+          </button>
+        </li>
+        }
+      </ul>
+      } @else {
+      <p class="empty">Aucun monument favori.</p>
+      }
+    </div>
+  </div>
+</section>

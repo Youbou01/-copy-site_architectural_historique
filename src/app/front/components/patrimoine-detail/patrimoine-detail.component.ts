@@ -1,11 +1,15 @@
 import { Component, computed, signal, inject } from '@angular/core';
+import { Observable } from 'rxjs';
+import { FetchedImage } from '../../../services/image.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PatrimoineService } from '../../../services/patrimoine.service';
+import { FavoritesService } from '../../../services/favorites.service';
 import { SiteHistorique } from '../../../models/site-historique';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CarouselComponent } from '../ui/carousel/carousel.component';
 import { SafeUrlPipe } from '../../../pipes/safe-url.pipe';
+import { ImageService } from '../../../services/image.service';
 
 type TabKey = 'about' | 'monuments' | 'comments' | 'map';
 
@@ -33,6 +37,11 @@ type TabKey = 'about' | 'monuments' | 'comments' | 'map';
 export class PatrimoineDetailComponent {
   private route = inject(ActivatedRoute);
   private service = inject(PatrimoineService);
+  private favorites = inject(FavoritesService);
+  private images = inject(ImageService);
+  unsplashImages$!: Observable<FetchedImage[]>;
+  commonsImages$!: Observable<FetchedImage[]>;
+  extraImages = signal<FetchedImage[]>([]); // merged sources
 
   patrimoine = signal<SiteHistorique | null>(null);
   loading = signal(true);
@@ -64,6 +73,17 @@ export class PatrimoineDetailComponent {
         this.patrimoine.set(data);
         this.service.currentPatrimoine.set(data);
         this.loading.set(false);
+        // Fetch both sources and merge
+        this.unsplashImages$ = this.images.fetchFor$(data.nom, 2);
+        this.commonsImages$ = this.images.fetchCommons$(data.nom, 2);
+        this.unsplashImages$.subscribe((u) => {
+          const current = this.extraImages();
+          this.extraImages.set([...u, ...current.filter((i) => i.source !== 'unsplash')]);
+        });
+        this.commonsImages$.subscribe((c) => {
+          const current = this.extraImages();
+          this.extraImages.set([...current.filter((i) => i.source !== 'commons'), ...c]);
+        });
       },
       error: (err) => {
         console.error(err);
@@ -85,6 +105,26 @@ export class PatrimoineDetailComponent {
     if (!rated.length) return null;
     const sum = rated.reduce((s, c) => s + (c.note ?? 0), 0);
     return Math.round((sum / rated.length) * 10) / 10;
+  });
+
+  // Combine local patrimoine photos with fetched Unsplash extras
+  combinedImages = computed<string[]>(() => {
+    const p = this.patrimoine();
+    if (!p) return [];
+    const local = p.photoCarousel ?? [];
+    const extra = this.extraImages().map((i) => i.src);
+    return [...local, ...extra];
+  });
+
+  altTexts = computed<string[]>(() => {
+    const p = this.patrimoine();
+    if (!p) return [];
+    const local = p.photoCarousel ?? [];
+    const extra = this.extraImages();
+    return [
+      ...local.map((_, i) => `Photo ${i + 1} de ${p.nom}`),
+      ...extra.map((img, i) => img.alt || `Image additionnelle ${i + 1} de ${p.nom}`),
+    ];
   });
 
   // Rounded integer average for star fill comparison in template
@@ -144,5 +184,13 @@ export class PatrimoineDetailComponent {
       default:
         return '';
     }
+  }
+
+  isFavoritePatrimoine() {
+    return this.favorites.isPatrimoineFavorite(this.patrimoine());
+  }
+
+  toggleFavoritePatrimoine() {
+    this.favorites.togglePatrimoine(this.patrimoine());
   }
 }
