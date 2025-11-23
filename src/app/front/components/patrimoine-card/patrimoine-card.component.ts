@@ -1,4 +1,9 @@
-// Enhanced patrimoine card
+/**
+ * Composant carte patrimoniale (PatrimoineCard).
+ * 
+ * Affiche un aperçu visuel d'un site historique sous forme de carte cliquable.
+ * Utilisé dans la liste des patrimoines pour navigation rapide.
+ */
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -10,6 +15,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
   standalone: true,
   imports: [CommonModule, RouterLink],
   animations: [
+    // Animation d'entrée: fade-in avec légère translation verticale et scale
     trigger('cardEnter', [
       transition(':enter', [
         style({ opacity: 0, transform: 'translateY(8px) scale(.98)' }),
@@ -25,6 +31,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
       tabindex="0"
       aria-label="Voir le site {{ patrimoine.nom }}"
     >
+      <!-- Image principale avec overlay et badges de catégories -->
       <div class="image-wrapper">
         <img
           [src]="patrimoine.photoCarousel[0] || '/images/placeholder.webp'"
@@ -33,14 +40,18 @@ import { trigger, transition, style, animate } from '@angular/animations';
         />
         <div class="overlay"></div>
         <div class="category-bar">
+          <!-- Affiche jusqu'à 3 catégories avec badge -->
           @for (cat of patrimoine.categories.slice(0,3); track cat) {
           <span class="badge">{{ cat }}</span>
           }
+          <!-- Badge "+N" si plus de 3 catégories -->
           @if (patrimoine.categories.length > 3) {
             <span class="badge extra">+{{ patrimoine.categories.length - 3 }}</span>
           }
         </div>
       </div>
+      
+      <!-- Contenu textuel: nom et localisation -->
       <div class="content">
         <h3>{{ patrimoine.nom }}</h3>
         @if (patrimoine.localisation) {
@@ -55,5 +66,6 @@ import { trigger, transition, style, animate } from '@angular/animations';
   styleUrls: ['./patrimoine-card.component.css'],
 })
 export class PatrimoineCardComponent {
+  /** Patrimoine à afficher dans cette carte (input requis) */
   @Input({ required: true }) patrimoine!: SiteHistorique;
 }

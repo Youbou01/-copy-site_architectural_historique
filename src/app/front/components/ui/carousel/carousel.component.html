@@ -1,3 +1,4 @@
+<!-- Conteneur principal du carousel avec variantes visuelles et navigation clavier -->
 <div class="carousel shell"
      [class.variant-focus]="variant === 'focus'"
      [class.variant-filmstrip]="variant === 'filmstrip'"
@@ -7,9 +8,13 @@
      (keydown)="keyHandler($event)"
      tabindex="0"
      aria-roledescription="carousel">
+  
+  <!-- Viewport Embla: conteneur de défilement -->
   <div #viewport class="viewport">
+    <!-- Track: piste contenant toutes les slides -->
     <div class="track">
       @for (img of images; let i = $index; track img) {
+      <!-- Slide individuelle avec image et dégradés -->
       <div class="slide" [class.active]="activeIndex() === i">
         <div class="media"
              [class.kenburns]="kenBurns && activeIndex() === i"
@@ -28,6 +33,7 @@
     </div>
   </div>
 
+  <!-- Barre de progression d'autoplay (optionnelle) -->
   @if (!disableProgress) {
   <div class="progress" role="progressbar"
        [attr.aria-valuenow]="progress()"
@@ -37,6 +43,7 @@
   </div>
   }
 
+  <!-- Boutons de navigation principale (précédent/suivant) -->
   <div class="nav primary">
     <button type="button"
             class="btn prev"
@@ -54,19 +61,22 @@
     </button>
   </div>
 
+  <!-- Miniatures (thumbnails) pour navigation rapide -->
   @if (showThumbnails && images.length > 1) {
   <div class="thumbs"
        [class.vertical]="variant === 'split'">
     @for (img of images; let i = $index; track img) {
+    <!-- Bouton miniature cliquable -->
     <button type="button"
             class="thumb"
             [class.active]="activeIndex() === i"
             (click)="goTo(i)"
-            [attr.aria-label]="'Aller à l’image ' + (i + 1)">
+            [attr.aria-label]="'Aller à l\'image ' + (i + 1)">
       <img [src]="img" [alt]="altFor(i)" loading="lazy" />
       <span class="ring"></span>
     </button>
     }
+    <!-- Indicateur de miniatures supplémentaires (si plus de 9 images) -->
     @if (images.length > 9) {
       <div class="more-indicator">+{{ images.length - 9 }}</div>
     }
