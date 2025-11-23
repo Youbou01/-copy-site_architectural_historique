@@ -11,14 +11,13 @@ import {
   computed
 } from '@angular/core';
 import EmblaCarousel, { type EmblaCarouselType, type EmblaOptionsType } from 'embla-carousel';
-import { NgClass, NgFor } from '@angular/common';
 
 type CarouselVariant = 'default' | 'focus' | 'filmstrip' | 'split';
 
 @Component({
   selector: 'app-carousel',
   standalone: true,
-  imports: [NgClass, NgFor],
+  imports: [],
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.css'],
 })

@@ -10,13 +10,23 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { CarouselComponent } from '../ui/carousel/carousel.component';
 import { SafeUrlPipe } from '../../../pipes/safe-url.pipe';
 import { ImageService } from '../../../services/image.service';
+import { RatingStarsComponent } from '../shared/rating-stars.component';
+import { CategoryChipsComponent } from '../shared/category-chips.component';
+import { getInitials, getCommentStatusClass } from '../../utils/common.utils';
 
 type TabKey = 'about' | 'monuments' | 'comments' | 'map';
 
 @Component({
   selector: 'app-patrimoine-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, CarouselComponent, SafeUrlPipe],
+  imports: [
+    CommonModule,
+    RouterLink,
+    CarouselComponent,
+    SafeUrlPipe,
+    RatingStarsComponent,
+    CategoryChipsComponent,
+  ],
   animations: [
     trigger('pageFade', [
       transition(':enter', [
@@ -50,8 +60,6 @@ export class PatrimoineDetailComponent {
   activeTab = signal<TabKey>('about');
   monumentSearch = signal('');
   monumentCategory = signal('');
-
-  readonly stars = [1, 2, 3, 4, 5] as const;
 
   constructor() {
     const id = this.route.snapshot.paramMap.get('patrimoineId');
@@ -127,12 +135,6 @@ export class PatrimoineDetailComponent {
     ];
   });
 
-  // Rounded integer average for star fill comparison in template
-  roundedAverage = computed<number>(() => {
-    const avg = this.averageRating();
-    return avg == null ? 0 : Math.round(avg);
-  });
-
   monumentCategories = computed(() => {
     const p = this.patrimoine();
     if (!p) return [];
@@ -168,23 +170,8 @@ export class PatrimoineDetailComponent {
     this.monumentCategory.set(val);
   }
 
-  initiales(nom: string): string {
-    const parts = nom.trim().split(/\s+/);
-    return (parts[0]?.[0] ?? '').toUpperCase() + (parts[1]?.[0] ?? '').toUpperCase();
-  }
-
-  commentStatusClass(etat: string) {
-    switch (etat) {
-      case 'approuvé':
-        return 'approved';
-      case 'en attente':
-        return 'pending';
-      case 'rejeté':
-        return 'rejected';
-      default:
-        return '';
-    }
-  }
+  initiales = getInitials;
+  commentStatusClass = getCommentStatusClass;
 
   isFavoritePatrimoine() {
     return this.favorites.isPatrimoineFavorite(this.patrimoine());

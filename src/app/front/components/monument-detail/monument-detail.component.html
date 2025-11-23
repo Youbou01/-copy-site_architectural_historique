@@ -38,35 +38,9 @@
           </button>
         </div>
 
-        @if (monument()!.categories?.length) {
-        <div class="chips">
-          @for (cat of monument()!.categories; track cat) {
-          <span class="chip">
-            <svg class="chip-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <!-- tag icon -->
-              <path
-                fill="currentColor"
-                d="M20.59 13.41 12 4.83H4v8.17l8.59 8.59a2 2 0 0 0 2.82 0l5.18-5.18a2 2 0 0 0 0-2.82ZM7 9a2 2 0 1 1 2-2 2 2 0 0 1-2 2Z"
-              />
-            </svg>
-            {{ cat }}
-          </span>
-          }
-        </div>
-        } @if (avgNote() !== null) {
-        <div class="rating-summary" title="Note moyenne">
-          <div class="stars">
-            @for (n of stars; track n) {
-            <svg viewBox="0 0 24 24" aria-hidden="true" [class.filled]="avgNote()! >= n - 0.5">
-              <path
-                d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27Z"
-                fill="currentColor"
-              />
-            </svg>
-            }
-          </div>
-          <span class="rating-value">{{ avgNote() }}</span>
-        </div>
+        <app-category-chips [categories]="monument()!.categories" />
+        @if (avgNote() !== null) {
+        <app-rating-stars [value]="avgNote()" [showValue]="true" cssClass="rating-summary" />
         }
       </div>
     </header>
@@ -219,16 +193,7 @@
                   {{ c.etat }}
                 </span>
                 } @if (c.note) {
-                <div class="stars mini" title="Note">
-                  @for (n of stars; track n) {
-                  <svg viewBox="0 0 24 24" aria-hidden="true" [class.filled]="n <= c.note!">
-                    <path
-                      d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                  }
-                </div>
+                <app-rating-stars [value]="c.note" cssClass="mini" title="Note" />
                 }
               </div>
             </div>
