@@ -111,7 +111,7 @@ export class AdminService {
       this.http.get<SiteHistorique>(`${this.baseUrl}/${submission.patrimoineId}`).subscribe({
         next: (patrimoine) => {
           const newComment: Commentaire = {
-            id: `c-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+            id: `c-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
             nom: submission.nom,
             message: submission.message,
             date: new Date().toISOString().split('T')[0],
