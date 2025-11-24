@@ -714,3 +714,27 @@
   flex: 1 1 0;
   text-align: center;
 }
+
+/* Pending comment styling - blurred/grayed effect */
+.comment-item.pending-comment {
+  opacity: 0.6;
+  filter: blur(0.5px);
+  position: relative;
+}
+
+.comment-item.pending-comment::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.3);
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+.comment-item.pending-comment .text {
+  color: var(--muted);
+}
+

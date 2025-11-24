@@ -1,0 +1,93 @@
+<div class="comment-moderation">
+  <div class="mb-4">
+    <h2 class="h3">Modération des commentaires</h2>
+    <p class="text-muted">Approuver ou rejeter les commentaires en attente</p>
+  </div>
+
+  @if (loading()) {
+  <div class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+  } @else if (error()) {
+  <div class="alert alert-danger">
+    <i class="bi bi-exclamation-triangle"></i> {{ error() }}
+  </div>
+  } @else if (pendingComments().length === 0) {
+  <div class="card text-center py-5">
+    <div class="card-body">
+      <i class="bi bi-check-circle text-success" style="font-size: 3rem"></i>
+      <h3 class="h5 mt-3">Aucun commentaire en attente</h3>
+      <p class="text-muted">Tous les commentaires ont été modérés.</p>
+    </div>
+  </div>
+  } @else {
+  <div class="comments-list">
+    @for (item of pendingComments(); track item.comment.id) {
+    <div class="comment-card">
+      <div class="comment-header">
+        <div class="comment-author">
+          <div class="author-avatar">{{ item.comment.nom.charAt(0).toUpperCase() }}</div>
+          <div>
+            <strong>{{ item.comment.nom }}</strong>
+            @if (item.comment.note) {
+            <div class="comment-rating">
+              @for (star of [1, 2, 3, 4, 5]; track star) {
+              <i
+                class="bi"
+                [class.bi-star-fill]="star <= item.comment.note!"
+                [class.bi-star]="star > item.comment.note!"
+                [class.text-warning]="star <= item.comment.note!"
+              ></i>
+              }
+            </div>
+            }
+          </div>
+        </div>
+        <span class="badge bg-warning">En attente</span>
+      </div>
+
+      <div class="comment-location">
+        <i class="bi bi-geo-alt"></i>
+        <strong>{{ item.patrimoineName }}</strong>
+        @if (item.monumentName) { → {{ item.monumentName }} }
+      </div>
+
+      <div class="comment-message">{{ item.comment.message }}</div>
+
+      <div class="comment-meta">
+        <small class="text-muted">
+          <i class="bi bi-calendar"></i> {{ item.comment.date }}
+        </small>
+      </div>
+
+      <div class="comment-actions">
+        <button
+          class="btn btn-success btn-sm"
+          (click)="approveComment(item)"
+          [disabled]="isProcessing(item.comment.id)"
+        >
+          @if (isProcessing(item.comment.id)) {
+          <span class="spinner-border spinner-border-sm me-1"></span>
+          } @else {
+          <i class="bi bi-check-circle"></i>
+          } Approuver
+        </button>
+        <button
+          class="btn btn-danger btn-sm"
+          (click)="rejectComment(item)"
+          [disabled]="isProcessing(item.comment.id)"
+        >
+          @if (isProcessing(item.comment.id)) {
+          <span class="spinner-border spinner-border-sm me-1"></span>
+          } @else {
+          <i class="bi bi-x-circle"></i>
+          } Rejeter
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>

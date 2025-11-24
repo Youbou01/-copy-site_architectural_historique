@@ -12,6 +12,7 @@ import { SafeUrlPipe } from '../../../pipes/safe-url.pipe';
 import { ImageService } from '../../../services/image.service';
 import { RatingStarsComponent } from '../shared/rating-stars.component';
 import { CategoryChipsComponent } from '../shared/category-chips.component';
+import { CommentFormComponent } from '../shared/comment-form/comment-form.component';
 import { getInitials, getCommentStatusClass } from '../../utils/common.utils';
 
 /** Type union des onglets disponibles dans la vue détail patrimoine */
@@ -38,6 +39,7 @@ type TabKey = 'about' | 'monuments' | 'comments' | 'map';
     SafeUrlPipe,
     RatingStarsComponent,
     CategoryChipsComponent,
+    CommentFormComponent,
   ],
   animations: [
     // Animation de fade-in pour l'entrée de la page
@@ -78,6 +80,7 @@ export class PatrimoineDetailComponent {
   activeTab = signal<TabKey>('about');        // Onglet actif
   monumentSearch = signal('');                // Recherche dans les monuments
   monumentCategory = signal('');              // Filtre de catégorie pour monuments
+  showCommentForm = signal(false);            // Show comment form modal
 
   constructor() {
     // Récupération de l'ID depuis les paramètres de route
@@ -240,5 +243,34 @@ export class PatrimoineDetailComponent {
    */
   toggleFavoritePatrimoine() {
     this.favorites.togglePatrimoine(this.patrimoine());
+  }
+
+  /**
+   * Open comment form modal
+   */
+  openCommentForm() {
+    this.showCommentForm.set(true);
+  }
+
+  /**
+   * Close comment form modal
+   */
+  closeCommentForm() {
+    this.showCommentForm.set(false);
+  }
+
+  /**
+   * Handle comment submitted - reload patrimoine data
+   */
+  onCommentSubmitted() {
+    const id = this.patrimoine()?.id;
+    if (id) {
+      this.service.getById(id).subscribe({
+        next: (data) => {
+          this.patrimoine.set(data);
+          this.service.currentPatrimoine.set(data);
+        },
+      });
+    }
   }
 }

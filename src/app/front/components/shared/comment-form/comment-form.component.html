@@ -1,0 +1,91 @@
+@if (showModal()) {
+<div class="modal-backdrop" (click)="close()">
+  <div class="modal-dialog" (click)="$event.stopPropagation()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Ajouter un commentaire</h3>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Fermer"></button>
+      </div>
+
+      <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
+        <div class="modal-body">
+          @if (error()) {
+          <div class="alert alert-danger">
+            <i class="bi bi-exclamation-triangle"></i> {{ error() }}
+          </div>
+          }
+
+          <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> Votre commentaire sera soumis à modération avant
+            publication.
+          </div>
+
+          <div class="mb-3">
+            <label for="nom" class="form-label">Votre nom</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nom"
+              formControlName="nom"
+              placeholder="Entrez votre nom"
+              [class.is-invalid]="getFieldError('nom')"
+            />
+            @if (getFieldError('nom')) {
+            <div class="invalid-feedback">{{ getFieldError('nom') }}</div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label for="message" class="form-label">Votre commentaire</label>
+            <textarea
+              class="form-control"
+              id="message"
+              formControlName="message"
+              rows="4"
+              placeholder="Partagez votre expérience..."
+              [class.is-invalid]="getFieldError('message')"
+            ></textarea>
+            @if (getFieldError('message')) {
+            <div class="invalid-feedback">{{ getFieldError('message') }}</div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label for="note" class="form-label">Note</label>
+            <div class="rating-input">
+              @for (star of [1, 2, 3, 4, 5]; track star) {
+              <button
+                type="button"
+                class="star-btn"
+                [class.active]="commentForm.value.note! >= star"
+                (click)="commentForm.patchValue({ note: star })"
+              >
+                <i
+                  class="bi"
+                  [class.bi-star-fill]="commentForm.value.note! >= star"
+                  [class.bi-star]="commentForm.value.note! < star"
+                ></i>
+              </button>
+              }
+              <span class="ms-2">{{ commentForm.value.note }}/5</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="close()">Annuler</button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="submitting() || commentForm.invalid"
+          >
+            @if (submitting()) {
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            } Envoyer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+}

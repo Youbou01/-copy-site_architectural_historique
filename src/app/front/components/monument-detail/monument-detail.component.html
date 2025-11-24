@@ -157,23 +157,28 @@
     </div>
 
     <div class="panel">
-      <h3 class="panel-title">
-        <span class="icon">
-          <!-- chat bubble -->
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="currentColor" d="M4 4h16v12H7l-3 3V4Z" />
-          </svg>
-        </span>
-        Commentaires
-        <span class="count-badge" aria-label="nombre de commentaires">
-          {{ monument()!.comments.length }}
-        </span>
-      </h3>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="panel-title">
+          <span class="icon">
+            <!-- chat bubble -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M4 4h16v12H7l-3 3V4Z" />
+            </svg>
+          </span>
+          Commentaires
+          <span class="count-badge" aria-label="nombre de commentaires">
+            {{ monument()!.comments.length }}
+          </span>
+        </h3>
+        <button class="btn btn-primary btn-sm" (click)="openCommentForm()">
+          <i class="bi bi-plus-circle"></i> Ajouter commentaire
+        </button>
+      </div>
 
       @if (monument()!.comments.length) {
       <ul class="comments">
         @for (c of monument()!.comments; track c.id) {
-        <li class="comment">
+        <li class="comment" [class.pending-comment]="c.etat === 'en attente'">
           <div class="avatar" [attr.aria-label]="'Avatar ' + c.nom">
             {{ initiales(c.nom) }}
           </div>
@@ -208,6 +213,15 @@
       } @else {
       <div class="muted">Aucun commentaire.</div>
       }
+
+      <!-- Comment Form Modal -->
+      <app-comment-form
+        [patrimoineId]="parentId()!"
+        [monumentId]="monument()!.id"
+        [showModal]="showCommentForm()"
+        (closeModal)="closeCommentForm()"
+        (commentSubmitted)="onCommentSubmitted()"
+      />
     </div>
 
     <div class="panel">

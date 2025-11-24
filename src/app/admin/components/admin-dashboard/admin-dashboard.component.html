@@ -1,0 +1,80 @@
+<div class="dashboard">
+  <div class="mb-4">
+    <h2 class="h3">Tableau de bord</h2>
+    <p class="text-muted">Vue d'ensemble de votre patrimoine architectural</p>
+  </div>
+
+  @if (loading()) {
+  <div class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+  } @else {
+  <!-- Statistics Cards -->
+  <div class="row g-4 mb-4">
+    <div class="col-md-4">
+      <div class="stat-card">
+        <div class="stat-icon bg-primary">
+          <i class="bi bi-building"></i>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-number">{{ patrimoinesCount() }}</h3>
+          <p class="stat-label">Patrimoines</p>
+        </div>
+        <a routerLink="/admin/patrimoines" class="stat-link">
+          Gérer <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="stat-card">
+        <div class="stat-icon bg-success">
+          <i class="bi bi-bank"></i>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-number">{{ monumentsCount() }}</h3>
+          <p class="stat-label">Monuments</p>
+        </div>
+        <a routerLink="/admin/monuments" class="stat-link">
+          Gérer <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="stat-card">
+        <div class="stat-icon bg-warning">
+          <i class="bi bi-chat-dots"></i>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-number">{{ pendingCommentsCount() }}</h3>
+          <p class="stat-label">Commentaires en attente</p>
+        </div>
+        <a routerLink="/admin/comments" class="stat-link">
+          Modérer <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="card">
+    <div class="card-body">
+      <h3 class="h5 mb-3">Actions rapides</h3>
+      <div class="d-flex flex-wrap gap-2">
+        <a routerLink="/admin/patrimoines/new" class="btn btn-primary">
+          <i class="bi bi-plus-circle"></i> Nouveau patrimoine
+        </a>
+        <a routerLink="/admin/monuments/new" class="btn btn-success">
+          <i class="bi bi-plus-circle"></i> Nouveau monument
+        </a>
+        <a routerLink="/admin/comments" class="btn btn-warning">
+          <i class="bi bi-chat-dots"></i> Modérer commentaires
+        </a>
+      </div>
+    </div>
+  </div>
+  }
+</div>
