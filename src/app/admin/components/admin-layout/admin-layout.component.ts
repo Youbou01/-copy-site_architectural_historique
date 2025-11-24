@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterOutlet, Router } from '@angular/router';
+import { RouterLink, RouterOutlet, Router, RouterLinkActive } from '@angular/router';
 import { AdminService } from '../../../services/admin.service';
 
 /**
@@ -10,7 +10,7 @@ import { AdminService } from '../../../services/admin.service';
 @Component({
   selector: 'app-admin-layout',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet],
+  imports: [CommonModule, RouterLink, RouterOutlet, RouterLinkActive],
   templateUrl: './admin-layout.component.html',
   styleUrl: './admin-layout.component.css',
 })

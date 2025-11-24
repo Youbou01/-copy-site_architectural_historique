@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { SiteHistorique } from '../models/site-historique';
 import { Commentaire } from '../models/commentaire';
 import { NewCommentSubmission } from '../models/admin';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
+import { tap, switchMap } from 'rxjs/operators';
 
 /**
  * Service for admin operations including CRUD for patrimoines/monuments
@@ -61,7 +62,7 @@ export class AdminService {
    */
   addMonument(patrimoineId: string, monument: SiteHistorique): Observable<SiteHistorique> {
     return this.http.get<SiteHistorique>(`${this.baseUrl}/${patrimoineId}`).pipe(
-      tap((patrimoine) => {
+      switchMap((patrimoine) => {
         patrimoine.monuments = patrimoine.monuments || [];
         patrimoine.monuments.push(monument);
         return this.updatePatrimoine(patrimoineId, patrimoine);
@@ -78,12 +79,12 @@ export class AdminService {
     monument: SiteHistorique
   ): Observable<SiteHistorique> {
     return this.http.get<SiteHistorique>(`${this.baseUrl}/${patrimoineId}`).pipe(
-      tap((patrimoine) => {
+      switchMap((patrimoine) => {
         const index = patrimoine.monuments.findIndex((m) => m.id === monumentId);
         if (index !== -1) {
           patrimoine.monuments[index] = monument;
-          return this.updatePatrimoine(patrimoineId, patrimoine);
         }
+        return this.updatePatrimoine(patrimoineId, patrimoine);
       })
     );
   }
@@ -93,7 +94,7 @@ export class AdminService {
    */
   deleteMonument(patrimoineId: string, monumentId: string): Observable<SiteHistorique> {
     return this.http.get<SiteHistorique>(`${this.baseUrl}/${patrimoineId}`).pipe(
-      tap((patrimoine) => {
+      switchMap((patrimoine) => {
         patrimoine.monuments = patrimoine.monuments.filter((m) => m.id !== monumentId);
         return this.updatePatrimoine(patrimoineId, patrimoine);
       })

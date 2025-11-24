@@ -6,40 +6,83 @@
       "localisation": "El Jem, Mahdia Governorate",
       "description": "Située à une soixantaine de kilomètres de Sousse, El Jem illustre le lien entre la Tunisie et l’Empire romain. Un colisée imposant, des villas d’aristocrates, une tradition ancestrale de la mosaïque… Découvrez l’héritage de cette perle du Sahel",
       "origineHistorique": "Antiquité romaine",
-      "photoCarousel": ["images/eljem_1.jpg", "images/eljem_2.jpg", "images/eljem_3.jpg"],
+      "photoCarousel": [
+        "images/eljem_1.jpg",
+        "images/eljem_2.jpg",
+        "images/eljem_3.jpg"
+      ],
       "latitude": 35.3006,
       "longitude": 10.7069,
-      "categories": ["Site archéologique"],
+      "categories": [
+        "Site archéologique"
+      ],
       "dateConstruction": "238-01-01",
       "estClasse": true,
-      "prixEntree": 6.0,
+      "prixEntree": 6,
       "ouvert": true,
-      "horaires": ["09:00-17:00"],
+      "horaires": [
+        "09:00-17:00"
+      ],
       "visitesGuideesDisponibles": true,
       "lieuxProches": [
-        { "nom": "Musée d'El Jem", "type": "Musée", "distanceKm": 0.5 },
-        { "nom": "Centre-ville d'El Jem", "type": "Quartier", "distanceKm": 1.2 }
+        {
+          "nom": "Musée d'El Jem",
+          "type": "Musée",
+          "distanceKm": 0.5
+        },
+        {
+          "nom": "Centre-ville d'El Jem",
+          "type": "Quartier",
+          "distanceKm": 1.2
+        }
       ],
-      "comments": [],
-      "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 },
+      "comments": [
+        {
+          "id": "c-1763951112877-xgih8adel",
+          "nom": "Test User",
+          "message": "Ceci est un commentaire de test qui sera en attente de modération!",
+          "date": "2025-11-24",
+          "note": 5,
+          "etat": "en attente"
+        }
+      ],
+      "stats": {
+        "vues": 0,
+        "favoris": 0,
+        "noteMoyenne": 4.6
+      },
       "monuments": [
         {
           "id": "mon-001-01",
           "nom": "Amphithéâtre d'El Jem",
           "description": "Amphithéâtre romain du IIIe siècle, capable d'accueillir des milliers de spectateurs, classé aussi au patrimoine mondial de l'UNESCO.",
           "origineHistorique": "Antiquité romaine",
-          "photoCarousel": ["images/eljem_amphi_1.jpg", "images/eljem_amphi_2.jpg"],
+          "photoCarousel": [
+            "images/eljem_amphi_1.jpg",
+            "images/eljem_amphi_2.jpg"
+          ],
           "latitude": 35.30062,
           "longitude": 10.70702,
           "dateConstruction": "238-01-01",
           "estClasse": true,
-          "prixEntree": 6.0,
+          "prixEntree": 6,
           "ouvert": true,
           "adresse": "El Jem, Tunisie",
-          "horaires": ["09:00-17:00"],
-          "categories": ["Romain", "Spectacle"],
+          "horaires": [
+            "09:00-17:00"
+          ],
+          "categories": [
+            "Romain",
+            "Spectacle"
+          ],
           "visitesGuideesDisponibles": true,
-          "lieuxProches": [{ "nom": "Musée d'El Jem", "type": "Musée", "distanceKm": 0.4 }],
+          "lieuxProches": [
+            {
+              "nom": "Musée d'El Jem",
+              "type": "Musée",
+              "distanceKm": 0.4
+            }
+          ],
           "comments": [
             {
               "id": "c-eljem-001",
@@ -74,7 +117,11 @@
               "etat": "approuvé"
             }
           ],
-          "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 }
+          "stats": {
+            "vues": 0,
+            "favoris": 0,
+            "noteMoyenne": 4.6
+          }
         }
       ]
     },
@@ -84,35 +131,61 @@
       "localisation": "Dougga, Béja Governorate",
       "description": "Site archéologique punico-romain très complet avec temples, forum, théâtre et capitole.",
       "origineHistorique": "Antiquité romaine",
-      "photoCarousel": ["images/dougga_1.jpg", "images/dougga_2.jpg", "images/dougga_3.jpg"],
+      "photoCarousel": [
+        "images/dougga_1.jpg",
+        "images/dougga_2.jpg",
+        "images/dougga_3.jpg"
+      ],
       "latitude": 36.42,
       "longitude": 9.22,
-      "categories": ["Site archéologique"],
+      "categories": [
+        "Site archéologique"
+      ],
       "dateConstruction": "200-01-01",
       "estClasse": true,
-      "prixEntree": 8.0,
+      "prixEntree": 8,
       "ouvert": true,
-      "horaires": ["08:00-18:00"],
+      "horaires": [
+        "08:00-18:00"
+      ],
       "visitesGuideesDisponibles": true,
-      "lieuxProches": [{ "nom": "Village de Téboursouk", "type": "Village", "distanceKm": 15.0 }],
+      "lieuxProches": [
+        {
+          "nom": "Village de Téboursouk",
+          "type": "Village",
+          "distanceKm": 15
+        }
+      ],
       "comments": [],
-      "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 },
+      "stats": {
+        "vues": 0,
+        "favoris": 0,
+        "noteMoyenne": 4.6
+      },
       "monuments": [
         {
           "id": "mon-002-01",
           "nom": "Théâtre de Dougga",
           "description": "Théâtre romain remarquablement bien conservé, situé au cœur du site.",
           "origineHistorique": "Antiquité romaine",
-          "photoCarousel": ["images/dougga_theatre_1.jpg", "images/dougga_theatre_2.jpg"],
+          "photoCarousel": [
+            "images/dougga_theatre_1.jpg",
+            "images/dougga_theatre_2.jpg"
+          ],
           "latitude": 36.4189,
           "longitude": 9.2198,
           "dateConstruction": "300-01-01",
           "estClasse": true,
-          "prixEntree": 4.0,
+          "prixEntree": 4,
           "ouvert": true,
           "adresse": "Dougga, Tunisie",
-          "horaires": ["08:00-17:00"],
-          "categories": ["Romain", "Théâtre"],
+          "horaires": [
+            "08:00-17:00"
+          ],
+          "categories": [
+            "Romain",
+            "Théâtre"
+          ],
           "visitesGuideesDisponibles": true,
           "lieuxProches": [],
           "comments": [
@@ -157,23 +230,35 @@
               "etat": "approuvé"
             }
           ],
-          "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 }
+          "stats": {
+            "vues": 0,
+            "favoris": 0,
+            "noteMoyenne": 4.6
+          }
         },
         {
           "id": "mon-002-02",
           "nom": "Capitole de Dougga",
           "description": "Temple plusieursfois restauré dédié aux grandes divinités romaines.",
           "origineHistorique": "Antiquité romaine",
-          "photoCarousel": ["images/dougga_capitole_1.jpg", "images/dougga_capitole_2.jpg"],
+          "photoCarousel": [
+            "images/dougga_capitole_1.jpg",
+            "images/dougga_capitole_2.jpg"
+          ],
           "latitude": 36.4192,
           "longitude": 9.2201,
           "dateConstruction": "100-01-01",
           "estClasse": true,
-          "prixEntree": 4.0,
+          "prixEntree": 4,
           "ouvert": true,
           "adresse": "Dougga, Tunisie",
-          "horaires": ["08:00-17:00"],
-          "categories": ["Romain", "Temple"],
+          "horaires": [
+            "08:00-17:00"
+          ],
+          "categories": [
+            "Romain",
+            "Temple"
+          ],
           "visitesGuideesDisponibles": true,
           "lieuxProches": [],
           "comments": [
@@ -210,7 +295,11 @@
               "etat": "approuvé"
             }
           ],
-          "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 }
+          "stats": {
+            "vues": 0,
+            "favoris": 0,
+            "noteMoyenne": 4.6
+          }
         }
       ]
     },
@@ -220,19 +309,36 @@
       "localisation": "Zaghouan, Zaghouan Governorate",
       "description": "Début de l'aqueduc romain qui alimentait la ville de Carthage en eau, remarquable vestige d'ingénierie.",
       "origineHistorique": "Romaine (IIe siècle)",
-      "photoCarousel": ["images/zaghouan_aqueduc_1.webp", "images/zaghouan_aqueduc_2.JPG"],
+      "photoCarousel": [
+        "images/zaghouan_aqueduc_1.webp",
+        "images/zaghouan_aqueduc_2.JPG"
+      ],
       "latitude": 36.4011,
       "longitude": 10.1393,
-      "categories": ["Infrastructure romaine"],
+      "categories": [
+        "Infrastructure romaine"
+      ],
       "dateConstruction": "100-01-01",
       "estClasse": false,
       "prixEntree": 0,
       "ouvert": true,
-      "horaires": ["09:00-16:00"],
+      "horaires": [
+        "09:00-16:00"
+      ],
       "visitesGuideesDisponibles": false,
-      "lieuxProches": [{ "nom": "Temple de la source", "type": "Site", "distanceKm": 0.8 }],
+      "lieuxProches": [
+        {
+          "nom": "Temple de la source",
+          "type": "Site",
+          "distanceKm": 0.8
+        }
+      ],
       "comments": [],
-      "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 },
+      "stats": {
+        "vues": 0,
+        "favoris": 0,
+        "noteMoyenne": 4.6
+      },
       "monuments": [
         {
           "id": "mon-003-01",
@@ -250,8 +356,13 @@
           "prixEntree": 0,
           "ouvert": true,
           "adresse": "Zaghouan, Tunisie",
-          "horaires": ["09:00-16:00"],
-          "categories": ["Romain", "Hydraulique"],
+          "horaires": [
+            "09:00-16:00"
+          ],
+          "categories": [
+            "Romain",
+            "Hydraulique"
+          ],
           "visitesGuideesDisponibles": false,
           "lieuxProches": [],
           "comments": [
@@ -288,7 +399,11 @@
               "etat": "approuvé"
             }
           ],
-          "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 }
+          "stats": {
+            "vues": 0,
+            "favoris": 0,
+            "noteMoyenne": 4.6
+          }
         }
       ]
     },
@@ -298,38 +413,66 @@
       "localisation": "Carthage, Tunis Governorate",
       "description": "Ancienne cité phénicienne et romaine, riche en ruines antiques, nécropoles et sites archéologiques.",
       "origineHistorique": "Phénicienne puis romaine",
-      "photoCarousel": ["images/carthage_1.png", "images/carthage_2.jpg", "images/carthage_3.png"],
+      "photoCarousel": [
+        "images/carthage_1.png",
+        "images/carthage_2.jpg",
+        "images/carthage_3.png"
+      ],
       "latitude": 36.8529,
       "longitude": 10.3233,
-      "categories": ["Ville historique"],
+      "categories": [
+        "Ville historique"
+      ],
       "dateConstruction": "814-01-01",
       "estClasse": true,
       "prixEntree": 0,
       "ouvert": true,
-      "horaires": ["08:00-18:00"],
+      "horaires": [
+        "08:00-18:00"
+      ],
       "visitesGuideesDisponibles": true,
       "lieuxProches": [
-        { "nom": "Byrsa", "type": "Colline historique", "distanceKm": 0.2 },
-        { "nom": "Sidi Bou Saïd", "type": "Village", "distanceKm": 6.0 }
+        {
+          "nom": "Byrsa",
+          "type": "Colline historique",
+          "distanceKm": 0.2
+        },
+        {
+          "nom": "Sidi Bou Saïd",
+          "type": "Village",
+          "distanceKm": 6
+        }
       ],
       "comments": [],
-      "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 },
+      "stats": {
+        "vues": 0,
+        "favoris": 0,
+        "noteMoyenne": 4.6
+      },
       "monuments": [
         {
           "id": "mon-004-01",
           "nom": "Thermes d'Antonin",
           "description": "Plus grands thermes romains d'Afrique du Nord, vaste complexe de ruines.",
           "origineHistorique": "Romaine",
-          "photoCarousel": ["images/therme_antonin_1.jpg", "images/thermes_antonin_2.jpg"],
+          "photoCarousel": [
+            "images/therme_antonin_1.jpg",
+            "images/thermes_antonin_2.jpg"
+          ],
           "latitude": 36.8571,
           "longitude": 10.3239,
           "dateConstruction": "145-01-01",
           "estClasse": true,
-          "prixEntree": 3.0,
+          "prixEntree": 3,
           "ouvert": true,
           "adresse": "Carthage, Tunisie",
-          "horaires": ["08:00-17:00"],
-          "categories": ["Romain", "Thermes"],
+          "horaires": [
+            "08:00-17:00"
+          ],
+          "categories": [
+            "Romain",
+            "Thermes"
+          ],
           "visitesGuideesDisponibles": true,
           "lieuxProches": [],
           "comments": [
@@ -374,23 +517,36 @@
               "etat": "approuvé"
             }
           ],
-          "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 }
+          "stats": {
+            "vues": 0,
+            "favoris": 0,
+            "noteMoyenne": 4.6
+          }
         },
         {
           "id": "mon-004-02",
           "nom": "Tophet de Salammbô",
           "description": "Site funéraire puniques avec stèles et urnes, témoin des rites anciens.",
           "origineHistorique": "Phénicienne",
-          "photoCarousel": ["images/tophet_1.webp", "images/tophet_2.webp", "images/tophet_3.webp"],
+          "photoCarousel": [
+            "images/tophet_1.webp",
+            "images/tophet_2.webp",
+            "images/tophet_3.webp"
+          ],
           "latitude": 36.852,
           "longitude": 10.3225,
           "dateConstruction": "600-01-01",
           "estClasse": true,
-          "prixEntree": 2.0,
+          "prixEntree": 2,
           "ouvert": true,
           "adresse": "Carthage, Tunisie",
-          "horaires": ["09:00-16:00"],
-          "categories": ["Punique", "Nécropole"],
+          "horaires": [
+            "09:00-16:00"
+          ],
+          "categories": [
+            "Punique",
+            "Nécropole"
+          ],
           "visitesGuideesDisponibles": false,
           "lieuxProches": [],
           "comments": [
@@ -427,7 +583,11 @@
               "etat": "approuvé"
             }
           ],
-          "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 }
+          "stats": {
+            "vues": 0,
+            "favoris": 0,
+            "noteMoyenne": 4.6
+          }
         },
         {
           "id": "mon-004-03",
@@ -447,8 +607,13 @@
           "prixEntree": 1.5,
           "ouvert": true,
           "adresse": "Carthage, Tunisie",
-          "horaires": ["09:00-17:00"],
-          "categories": ["Romain", "Spectacle"],
+          "horaires": [
+            "09:00-17:00"
+          ],
+          "categories": [
+            "Romain",
+            "Spectacle"
+          ],
           "visitesGuideesDisponibles": true,
           "lieuxProches": [],
           "comments": [
@@ -485,7 +650,11 @@
               "etat": "approuvé"
             }
           ],
-          "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 }
+          "stats": {
+            "vues": 0,
+            "favoris": 0,
+            "noteMoyenne": 4.6
+          }
         }
       ]
     },
@@ -502,26 +671,47 @@
       ],
       "latitude": 36.8065,
       "longitude": 10.1815,
-      "categories": ["Médina", "Patrimoine", "immatériel"],
+      "categories": [
+        "Médina",
+        "Patrimoine",
+        "immatériel"
+      ],
       "dateConstruction": "700-01-01",
       "estClasse": true,
       "prixEntree": 0,
       "ouvert": true,
-      "horaires": ["Toute la journée"],
+      "horaires": [
+        "Toute la journée"
+      ],
       "visitesGuideesDisponibles": true,
       "lieuxProches": [
-        { "nom": "Place du Gouvernement", "type": "Place", "distanceKm": 0.8 },
-        { "nom": "Mosquée Zitouna", "type": "Mosquée", "distanceKm": 0.1 }
+        {
+          "nom": "Place du Gouvernement",
+          "type": "Place",
+          "distanceKm": 0.8
+        },
+        {
+          "nom": "Mosquée Zitouna",
+          "type": "Mosquée",
+          "distanceKm": 0.1
+        }
       ],
       "comments": [],
-      "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 },
+      "stats": {
+        "vues": 0,
+        "favoris": 0,
+        "noteMoyenne": 4.6
+      },
       "monuments": [
         {
           "id": "mon-005-01",
           "nom": "Mosquée Zitouna",
           "description": "Centre religieux et éducatif historique de la médina, avec une architecture remarquable.",
           "origineHistorique": "Islamique médiévale",
-          "photoCarousel": ["images/zitouna_1.jpg", "images/zitouna_2.jpg"],
+          "photoCarousel": [
+            "images/zitouna_1.jpg",
+            "images/zitouna_2.jpg"
+          ],
           "latitude": 36.806,
           "longitude": 10.181,
           "dateConstruction": "732-01-01",
@@ -529,8 +719,13 @@
           "prixEntree": 0,
           "ouvert": true,
           "adresse": "Médina de Tunis, Tunisie",
-          "horaires": ["08:00-18:00"],
-          "categories": ["Religieux", "Historique"],
+          "horaires": [
+            "08:00-18:00"
+          ],
+          "categories": [
+            "Religieux",
+            "Historique"
+          ],
           "visitesGuideesDisponibles": true,
           "lieuxProches": [],
           "comments": [
@@ -567,7 +762,11 @@
               "etat": "approuvé"
             }
           ],
-          "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 }
+          "stats": {
+            "vues": 0,
+            "favoris": 0,
+            "noteMoyenne": 4.6
+          }
         },
         {
           "id": "mon-005-02",
@@ -583,11 +782,16 @@
           "longitude": 10.1813,
           "dateConstruction": "18th-01-01",
           "estClasse": false,
-          "prixEntree": 2.0,
+          "prixEntree": 2,
           "ouvert": true,
           "adresse": "Médina de Tunis, Tunisie",
-          "horaires": ["09:00-16:00"],
-          "categories": ["Musée", "Culture"],
+          "horaires": [
+            "09:00-16:00"
+          ],
+          "categories": [
+            "Musée",
+            "Culture"
+          ],
           "visitesGuideesDisponibles": false,
           "lieuxProches": [],
           "comments": [
@@ -624,7 +828,11 @@
               "etat": "approuvé"
             }
           ],
-          "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 }
+          "stats": {
+            "vues": 0,
+            "favoris": 0,
+            "noteMoyenne": 4.6
+          }
         }
       ]
     },
@@ -641,32 +849,54 @@
       ],
       "latitude": 37.2086,
       "longitude": 9.3658,
-      "categories": ["Parc naturel"],
+      "categories": [
+        "Parc naturel"
+      ],
       "dateConstruction": "1980-01-01",
       "estClasse": true,
-      "prixEntree": 3.0,
+      "prixEntree": 3,
       "ouvert": true,
-      "horaires": ["08:00-17:00"],
+      "horaires": [
+        "08:00-17:00"
+      ],
       "visitesGuideesDisponibles": true,
-      "lieuxProches": [{ "nom": "Village d'Ichkeul", "type": "Village", "distanceKm": 2.0 }],
+      "lieuxProches": [
+        {
+          "nom": "Village d'Ichkeul",
+          "type": "Village",
+          "distanceKm": 2
+        }
+      ],
       "comments": [],
-      "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 },
+      "stats": {
+        "vues": 0,
+        "favoris": 0,
+        "noteMoyenne": 4.6
+      },
       "monuments": [
         {
           "id": "mon-006-01",
           "nom": "Lac d'Ichkeul et zones humides",
           "description": "Zone humide essentielle pour de nombreuses espèces d'oiseaux durant la migration.",
           "origineHistorique": "Naturel",
-          "photoCarousel": ["images/ichkeul_3.jpg", "images/ichkeul_lake_2.jpg"],
+          "photoCarousel": [
+            "images/ichkeul_3.jpg",
+            "images/ichkeul_lake_2.jpg"
+          ],
           "latitude": 37.209,
           "longitude": 9.366,
           "dateConstruction": null,
           "estClasse": true,
-          "prixEntree": 3.0,
+          "prixEntree": 3,
           "ouvert": true,
           "adresse": "Ichkeul, Tunisie",
-          "horaires": ["08:00-17:00"],
-          "categories": ["Nature", "Oiseaux"],
+          "horaires": [
+            "08:00-17:00"
+          ],
+          "categories": [
+            "Nature",
+            "Oiseaux"
+          ],
           "visitesGuideesDisponibles": true,
           "lieuxProches": [],
           "comments": [
@@ -711,7 +941,11 @@
               "etat": "approuvé"
             }
           ],
-          "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 }
+          "stats": {
+            "vues": 0,
+            "favoris": 0,
+            "noteMoyenne": 4.6
+          }
         }
       ]
     },
@@ -728,32 +962,54 @@
       ],
       "latitude": 35.8256,
       "longitude": 10.63699,
-      "categories": ["Médina", "Site historique"],
+      "categories": [
+        "Médina",
+        "Site historique"
+      ],
       "dateConstruction": "1000-01-01",
       "estClasse": true,
       "prixEntree": 0,
       "ouvert": true,
-      "horaires": ["Toute la journée"],
+      "horaires": [
+        "Toute la journée"
+      ],
       "visitesGuideesDisponibles": true,
-      "lieuxProches": [{ "nom": "Ribat de Sousse", "type": "Forteresse", "distanceKm": 0.2 }],
+      "lieuxProches": [
+        {
+          "nom": "Ribat de Sousse",
+          "type": "Forteresse",
+          "distanceKm": 0.2
+        }
+      ],
       "comments": [],
-      "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 },
+      "stats": {
+        "vues": 0,
+        "favoris": 0,
+        "noteMoyenne": 4.6
+      },
       "monuments": [
         {
           "id": "mon-007-01",
           "nom": "Ribat de Sousse",
           "description": "Forteresse militaire islamique offrant une vue panoramique sur la ville et la mer.",
           "origineHistorique": "Islamique médiévale",
-          "photoCarousel": ["images/ribat_sousse_1.jpg"],
+          "photoCarousel": [
+            "images/ribat_sousse_1.jpg"
+          ],
           "latitude": 35.8257,
           "longitude": 10.6368,
           "dateConstruction": "821-01-01",
           "estClasse": true,
-          "prixEntree": 2.0,
+          "prixEntree": 2,
           "ouvert": true,
           "adresse": "Sousse, Tunisie",
-          "horaires": ["08:00-17:00"],
-          "categories": ["Islamique", "Défense"],
+          "horaires": [
+            "08:00-17:00"
+          ],
+          "categories": [
+            "Islamique",
+            "Défense"
+          ],
           "visitesGuideesDisponibles": true,
           "lieuxProches": [],
           "comments": [
@@ -790,14 +1046,20 @@
               "etat": "approuvé"
             }
           ],
-          "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 }
+          "stats": {
+            "vues": 0,
+            "favoris": 0,
+            "noteMoyenne": 4.6
+          }
         },
         {
           "id": "mon-007-02",
           "nom": "Grande Mosquée de Sousse",
           "description": "Mosquée historique située dans la médina, remarquable pour son architecture.",
           "origineHistorique": "Islamique médiévale",
-          "photoCarousel": ["images/mosque_sousse_1.jpg"],
+          "photoCarousel": [
+            "images/mosque_sousse_1.jpg"
+          ],
           "latitude": 35.8259,
           "longitude": 10.6371,
           "dateConstruction": "9th-01-01",
@@ -805,8 +1067,12 @@
           "prixEntree": 0,
           "ouvert": true,
           "adresse": "Médina de Sousse, Tunisie",
-          "horaires": ["08:00-17:00"],
-          "categories": ["Religieux"],
+          "horaires": [
+            "08:00-17:00"
+          ],
+          "categories": [
+            "Religieux"
+          ],
           "visitesGuideesDisponibles": false,
           "lieuxProches": [],
           "comments": [
@@ -843,7 +1109,11 @@
               "etat": "approuvé"
             }
           ],
-          "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 }
+          "stats": {
+            "vues": 0,
+            "favoris": 0,
+            "noteMoyenne": 4.6
+          }
         }
       ]
     },
@@ -853,28 +1123,47 @@
       "localisation": "Kairouan, Kairouan Governorate",
       "description": "Ville sainte de l'islam en Tunisie, célèbre pour la Grande Mosquée d'Oqba et son patrimoine islamique.",
       "origineHistorique": "Islamique médiévale (VIIIe siècle)",
-      "photoCarousel": ["images/kairouan_1.png", "images/kairouan_2.webp"],
+      "photoCarousel": [
+        "images/kairouan_1.png",
+        "images/kairouan_2.webp"
+      ],
       "latitude": 35.6781,
       "longitude": 10.0963,
-      "categories": ["Ville religieuse"],
+      "categories": [
+        "Ville religieuse"
+      ],
       "dateConstruction": "670-01-01",
       "estClasse": true,
       "prixEntree": 0,
       "ouvert": true,
-      "horaires": ["Toute la journée"],
+      "horaires": [
+        "Toute la journée"
+      ],
       "visitesGuideesDisponibles": true,
       "lieuxProches": [
-        { "nom": "Bassin des Aghlabides", "type": "Infrastructure historique", "distanceKm": 0.5 }
+        {
+          "nom": "Bassin des Aghlabides",
+          "type": "Infrastructure historique",
+          "distanceKm": 0.5
+        }
       ],
       "comments": [],
-      "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 },
+      "stats": {
+        "vues": 0,
+        "favoris": 0,
+        "noteMoyenne": 4.6
+      },
       "monuments": [
         {
           "id": "mon-008-01",
           "nom": "Grande Mosquée d'Oqba",
           "description": "L'un des plus anciens lieux de culte de l'Islam en Afrique du Nord, centre spirituel et éducatif.",
           "origineHistorique": "Islamique médiévale",
-          "photoCarousel": ["images/oqba_0.jpg", "images/oqba_1.jpg", "images/oqba_2.jpg"],
+          "photoCarousel": [
+            "images/oqba_0.jpg",
+            "images/oqba_1.jpg",
+            "images/oqba_2.jpg"
+          ],
           "latitude": 35.678,
           "longitude": 10.096,
           "dateConstruction": "670-01-01",
@@ -882,8 +1171,13 @@
           "prixEntree": 0,
           "ouvert": true,
           "adresse": "Kairouan, Tunisie",
-          "horaires": ["08:00-18:00"],
-          "categories": ["Religieux", "Historique"],
+          "horaires": [
+            "08:00-18:00"
+          ],
+          "categories": [
+            "Religieux",
+            "Historique"
+          ],
           "visitesGuideesDisponibles": true,
           "lieuxProches": [],
           "comments": [
@@ -928,7 +1222,11 @@
               "etat": "approuvé"
             }
           ],
-          "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 }
+          "stats": {
+            "vues": 0,
+            "favoris": 0,
+            "noteMoyenne": 4.6
+          }
         }
       ]
     },
@@ -938,35 +1236,60 @@
       "localisation": "Djerba, Médenine Governorate",
       "description": "Île méditerranéenne réputée pour ses traditions, artisanat, plages et sites religieux historiques.",
       "origineHistorique": "Arabo-berbère et ottomane",
-      "photoCarousel": ["images/djerba_1.jpg", "images/djerba_2.webp"],
+      "photoCarousel": [
+        "images/djerba_1.jpg",
+        "images/djerba_2.webp"
+      ],
       "latitude": 33.8076,
       "longitude": 10.8758,
-      "categories": ["Île culturelle"],
+      "categories": [
+        "Île culturelle"
+      ],
       "dateConstruction": null,
       "estClasse": false,
       "prixEntree": 0,
       "ouvert": true,
-      "horaires": ["Toute la journée"],
+      "horaires": [
+        "Toute la journée"
+      ],
       "visitesGuideesDisponibles": true,
-      "lieuxProches": [{ "nom": "Houmt Souk", "type": "Ville", "distanceKm": 1.0 }],
+      "lieuxProches": [
+        {
+          "nom": "Houmt Souk",
+          "type": "Ville",
+          "distanceKm": 1
+        }
+      ],
       "comments": [],
-      "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 },
+      "stats": {
+        "vues": 0,
+        "favoris": 0,
+        "noteMoyenne": 4.6
+      },
       "monuments": [
         {
           "id": "mon-009-01",
           "nom": "Fort Ghazi Mustapha",
           "description": "Fort historique situé sur l'île, vestige des périodes ottomane et coloniale.",
           "origineHistorique": "Ottomane",
-          "photoCarousel": ["images/fort_ghazi_1.jpg", "images/fort_ghazi_2.jpg"],
+          "photoCarousel": [
+            "images/fort_ghazi_1.jpg",
+            "images/fort_ghazi_2.jpg"
+          ],
           "latitude": 33.8333,
           "longitude": 10.885,
           "dateConstruction": "16th-01-01",
           "estClasse": false,
-          "prixEntree": 2.0,
+          "prixEntree": 2,
           "ouvert": true,
           "adresse": "Djerba, Tunisie",
-          "horaires": ["09:00-16:00"],
-          "categories": ["Militaire", "Historique"],
+          "horaires": [
+            "09:00-16:00"
+          ],
+          "categories": [
+            "Militaire",
+            "Historique"
+          ],
           "visitesGuideesDisponibles": false,
           "lieuxProches": [],
           "comments": [
@@ -1003,14 +1326,21 @@
               "etat": "approuvé"
             }
           ],
-          "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 }
+          "stats": {
+            "vues": 0,
+            "favoris": 0,
+            "noteMoyenne": 4.6
+          }
         },
         {
           "id": "mon-009-02",
           "nom": "Synagogue de la Ghriba",
           "description": "L'une des plus anciennes synagogues d'Afrique, lieu de pèlerinage pour la communauté juive.",
           "origineHistorique": "Judaïque ancienne",
-          "photoCarousel": ["images/ghriba_1.jpg", "images/ghriba_2.jpg"],
+          "photoCarousel": [
+            "images/ghriba_1.jpg",
+            "images/ghriba_2.jpg"
+          ],
           "latitude": 33.7929,
           "longitude": 10.9131,
           "dateConstruction": null,
@@ -1018,8 +1348,13 @@
           "prixEntree": 0,
           "ouvert": true,
           "adresse": "Er Riad, Djerba",
-          "horaires": ["07:00-19:00"],
-          "categories": ["Religieux", "Culturel"],
+          "horaires": [
+            "07:00-19:00"
+          ],
+          "categories": [
+            "Religieux",
+            "Culturel"
+          ],
           "visitesGuideesDisponibles": true,
           "lieuxProches": [],
           "comments": [
@@ -1064,14 +1399,20 @@
               "etat": "approuvé"
             }
           ],
-          "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 }
+          "stats": {
+            "vues": 0,
+            "favoris": 0,
+            "noteMoyenne": 4.6
+          }
         },
         {
           "id": "mon-009-03",
           "nom": "Houmt Souk (centre)",
           "description": "Ville principale de Djerba, connue pour ses souks, artisanat et architecture blanche.",
           "origineHistorique": "Traditionnelle",
-          "photoCarousel": ["images/houmt_souk_1.jpg"],
+          "photoCarousel": [
+            "images/houmt_souk_1.jpg"
+          ],
           "latitude": 33.8806,
           "longitude": 10.862,
           "dateConstruction": null,
@@ -1079,8 +1420,13 @@
           "prixEntree": 0,
           "ouvert": true,
           "adresse": "Houmt Souk, Djerba",
-          "horaires": ["Toute la journée"],
-          "categories": ["Marché", "Culture"],
+          "horaires": [
+            "Toute la journée"
+          ],
+          "categories": [
+            "Marché",
+            "Culture"
+          ],
           "visitesGuideesDisponibles": false,
           "lieuxProches": [],
           "comments": [
@@ -1117,7 +1463,11 @@
               "etat": "approuvé"
             }
           ],
-          "stats": { "vues": 0, "favoris": 0, "noteMoyenne": 4.6 }
+          "stats": {
+            "vues": 0,
+            "favoris": 0,
+            "noteMoyenne": 4.6
+          }
         }
       ]
     }
