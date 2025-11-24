@@ -1,5 +1,6 @@
 /**
  * Type énumérant les états possibles d'un commentaire après modération
+ * Note: Les commentaires rejetés sont supprimés de la base de données
  */
 export type EtatCommentaire = 'approuvé' | 'en attente' | 'rejeté';
 

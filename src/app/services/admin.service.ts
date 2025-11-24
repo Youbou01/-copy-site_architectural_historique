@@ -148,7 +148,7 @@ export class AdminService {
   }
 
   /**
-   * Update comment status (approve or reject)
+   * Update comment status (approve) or delete (reject)
    */
   updateCommentStatus(
     patrimoineId: string,
@@ -162,21 +162,33 @@ export class AdminService {
           let commentFound = false;
 
           if (monumentId) {
-            // Update comment in monument
+            // Update or delete comment in monument
             const monument = patrimoine.monuments.find((m) => m.id === monumentId);
             if (monument && monument.comments) {
-              const comment = monument.comments.find((c) => c.id === commentId);
-              if (comment) {
-                comment.etat = newState;
+              const commentIndex = monument.comments.findIndex((c) => c.id === commentId);
+              if (commentIndex !== -1) {
+                if (newState === 'rejeté') {
+                  // Delete rejected comment
+                  monument.comments.splice(commentIndex, 1);
+                } else {
+                  // Approve comment
+                  monument.comments[commentIndex].etat = newState;
+                }
                 commentFound = true;
               }
             }
           } else {
-            // Update comment in patrimoine
+            // Update or delete comment in patrimoine
             if (patrimoine.comments) {
-              const comment = patrimoine.comments.find((c) => c.id === commentId);
-              if (comment) {
-                comment.etat = newState;
+              const commentIndex = patrimoine.comments.findIndex((c) => c.id === commentId);
+              if (commentIndex !== -1) {
+                if (newState === 'rejeté') {
+                  // Delete rejected comment
+                  patrimoine.comments.splice(commentIndex, 1);
+                } else {
+                  // Approve comment
+                  patrimoine.comments[commentIndex].etat = newState;
+                }
                 commentFound = true;
               }
             }

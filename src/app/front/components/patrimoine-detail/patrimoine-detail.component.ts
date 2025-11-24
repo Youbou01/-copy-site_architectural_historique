@@ -130,13 +130,16 @@ export class PatrimoineDetailComponent {
   }
 
   /**
-   * Calcul dérivé: tous les commentaires de tous les monuments, aplatis en une seule liste.
+   * Calcul dérivé: tous les commentaires du patrimoine et de ses monuments, aplatis en une seule liste.
    * Utilisé pour afficher l'onglet "Commentaires" global du patrimoine.
    */
   allComments = computed(() => {
     const p = this.patrimoine();
     if (!p) return [];
-    return p.monuments.flatMap((m) => m.comments);
+    // Include both patrimoine comments and monument comments
+    const patrimoineComments = p.comments || [];
+    const monumentComments = p.monuments.flatMap((m) => m.comments || []);
+    return [...patrimoineComments, ...monumentComments];
   });
 
   /**
