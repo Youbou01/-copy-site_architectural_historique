@@ -27,16 +27,14 @@ export class AdminDashboardComponent implements OnInit {
     // Use effect to reactively update counts when patrimoines change
     effect(() => {
       const patrimoines = this.patrimoineService.patrimoines();
-      if (patrimoines.length > 0) {
-        this.patrimoinesCount.set(patrimoines.length);
-        
-        // Count all monuments across all patrimoines
-        let totalMonuments = 0;
-        patrimoines.forEach((p) => {
-          totalMonuments += p.monuments?.length || 0;
-        });
-        this.monumentsCount.set(totalMonuments);
-      }
+      this.patrimoinesCount.set(patrimoines.length);
+      
+      // Count all monuments across all patrimoines
+      let totalMonuments = 0;
+      patrimoines.forEach((p) => {
+        totalMonuments += p.monuments?.length || 0;
+      });
+      this.monumentsCount.set(totalMonuments);
     });
   }
 
