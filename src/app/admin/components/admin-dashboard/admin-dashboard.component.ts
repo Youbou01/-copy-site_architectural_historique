@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PatrimoineService } from '../../../services/patrimoine.service';
@@ -23,6 +23,23 @@ export class AdminDashboardComponent implements OnInit {
   pendingCommentsCount = signal(0);
   loading = signal(true);
 
+  constructor() {
+    // Use effect to reactively update counts when patrimoines change
+    effect(() => {
+      const patrimoines = this.patrimoineService.patrimoines();
+      if (patrimoines.length > 0) {
+        this.patrimoinesCount.set(patrimoines.length);
+        
+        // Count all monuments across all patrimoines
+        let totalMonuments = 0;
+        patrimoines.forEach((p) => {
+          totalMonuments += p.monuments?.length || 0;
+        });
+        this.monumentsCount.set(totalMonuments);
+      }
+    });
+  }
+
   ngOnInit() {
     this.loadStats();
   }
@@ -30,17 +47,8 @@ export class AdminDashboardComponent implements OnInit {
   loadStats() {
     this.loading.set(true);
 
-    // Load patrimoines
+    // Load patrimoines (will trigger effect above)
     this.patrimoineService.loadAll();
-    const patrimoines = this.patrimoineService.patrimoines();
-    this.patrimoinesCount.set(patrimoines.length);
-
-    // Count monuments
-    let totalMonuments = 0;
-    patrimoines.forEach((p) => {
-      totalMonuments += p.monuments?.length || 0;
-    });
-    this.monumentsCount.set(totalMonuments);
 
     // Load pending comments count
     this.adminService.getPendingComments().subscribe({
