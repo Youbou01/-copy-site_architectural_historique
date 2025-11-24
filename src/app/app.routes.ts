@@ -12,5 +12,9 @@ export const routes: Routes = [
   { path: 'patrimoines/:patrimoineId', component: PatrimoineDetailComponent },
   { path: 'patrimoines/:patrimoineId/monuments/:monumentId', component: MonumentDetailComponent },
   { path: 'favoris', component: FavoritesComponent },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.routes').then((m) => m.adminRoutes),
+  },
   { path: '**', redirectTo: 'patrimoines' },
 ];

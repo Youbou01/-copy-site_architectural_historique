@@ -366,3 +366,27 @@
     font-size: 1.35rem;
   }
 }
+
+/* Pending comment styling - blurred/grayed effect */
+.comment.pending-comment {
+  opacity: 0.6;
+  filter: blur(0.5px);
+  position: relative;
+}
+
+.comment.pending-comment::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.3);
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+.comment.pending-comment .comment-text {
+  color: var(--muted);
+}
+

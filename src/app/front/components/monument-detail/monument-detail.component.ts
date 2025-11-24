@@ -14,6 +14,7 @@ import { ImageService, FetchedImage } from '../../../services/image.service';
 import { Observable } from 'rxjs';
 import { RatingStarsComponent } from '../shared/rating-stars.component';
 import { CategoryChipsComponent } from '../shared/category-chips.component';
+import { CommentFormComponent } from '../shared/comment-form/comment-form.component';
 import { getInitials } from '../../utils/common.utils';
 
 /**
@@ -41,6 +42,7 @@ import { getInitials } from '../../utils/common.utils';
     SafeUrlPipe,
     RatingStarsComponent,
     CategoryChipsComponent,
+    CommentFormComponent,
   ],
   animations: [
     // Animation de fade-in pour l'entrée de la page
@@ -70,6 +72,7 @@ export class MonumentDetailComponent {
   error = signal<string | null>(null);            // Message d'erreur éventuel
   monument = signal<SiteHistorique | null>(null); // Monument actuellement affiché
   parentId = signal<string | null>(null);         // ID du patrimoine parent
+  showCommentForm = signal(false);                // Show comment form modal
 
   /**
    * Calcul dérivé: note moyenne des commentaires du monument.
@@ -227,5 +230,36 @@ export class MonumentDetailComponent {
    */
   toggleFavoriteMonument() {
     this.favorites.toggleMonument(this.parentId(), this.monument());
+  }
+
+  /**
+   * Open comment form modal
+   */
+  openCommentForm() {
+    this.showCommentForm.set(true);
+  }
+
+  /**
+   * Close comment form modal
+   */
+  closeCommentForm() {
+    this.showCommentForm.set(false);
+  }
+
+  /**
+   * Handle comment submitted - reload monument data
+   */
+  onCommentSubmitted() {
+    const patrimoineId = this.parentId();
+    if (patrimoineId) {
+      this.service.getById(patrimoineId).subscribe({
+        next: (data) => {
+          const monument = data.monuments.find((m) => m.id === this.monument()?.id);
+          if (monument) {
+            this.monument.set(monument);
+          }
+        },
+      });
+    }
   }
 }

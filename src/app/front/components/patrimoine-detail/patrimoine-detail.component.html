@@ -337,11 +337,16 @@
   <!-- COMMENTS -->
   @if (activeTab() === 'comments') {
   <section class="panel comments-section" [@sectionFade]>
-    <h2>Commentaires agrégés</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Commentaires agrégés</h2>
+      <button class="btn btn-primary" (click)="openCommentForm()">
+        <i class="bi bi-plus-circle"></i> Ajouter commentaire
+      </button>
+    </div>
     @if (allComments().length) {
     <ul class="comments-list">
       @for (c of allComments(); track c.id) {
-      <li class="comment-item">
+      <li class="comment-item" [class.pending-comment]="c.etat === 'en attente'">
         <div class="avatar">{{ initiales(c.nom) }}</div>
         <div class="body">
           <div class="head">
@@ -363,6 +368,14 @@
     }
   </section>
   }
+
+  <!-- Comment Form Modal -->
+  <app-comment-form
+    [patrimoineId]="patrimoine()!.id"
+    [showModal]="showCommentForm()"
+    (closeModal)="closeCommentForm()"
+    (commentSubmitted)="onCommentSubmitted()"
+  />
 
   <!-- MAP -->
   @if (activeTab() === 'map') {

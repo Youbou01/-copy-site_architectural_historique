@@ -1,6 +1,7 @@
 import { Component, signal, inject, PLATFORM_ID } from '@angular/core';
 import { RouterLink, Router, RouterModule } from '@angular/router';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { AdminService } from '../../../services/admin.service';
 
 /**
  * Composant de navigation principal de l'application.
@@ -24,6 +25,7 @@ export class NavbarComponent {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly doc = inject(DOCUMENT);
   router = inject(Router);
+  adminService = inject(AdminService);
 
   /**
    * Bascule entre le thème clair et sombre.
@@ -47,6 +49,14 @@ export class NavbarComponent {
    */
   isActive(path: string) {
     return this.router.url.startsWith(path);
+  }
+  
+  /**
+   * Enable admin mode and navigate to admin panel
+   */
+  enterAdminMode() {
+    this.adminService.setAdminMode(true);
+    this.router.navigate(['/admin']);
   }
   
 }
